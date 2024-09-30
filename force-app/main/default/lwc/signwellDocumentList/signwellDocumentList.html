@@ -1,0 +1,31 @@
+<template>
+     <section class="main-container">
+        <div class="ApplicationForm">
+            <div>
+                <p style="font-size: 19px;">Documents</p>
+            </div>
+            <div>
+                <lightning-button label="Refresh" title="Non-primary action" onclick={handleRefreshClick}></lightning-button>
+            </div>
+        </div>
+        <lightning-card>
+            <div class="container_1">
+                <template if:true={isShowSpinner}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </template>
+                <template for:each={documents} for:item="docs">
+                    <div class="slds-m-around_medium" key={docs.Id}>
+                        <div class="user-container">
+                            <div>
+                                <p><a href={docs.Document_link__c} target="_blank">{docs.Document_Name__c}</a></p>
+                            </div>
+                            <div>
+                                <p>{docs.Status__c}</p>
+                            </div>
+                        </div>
+                    </div>
+                </template>        
+            </div>
+    </lightning-card>     
+     </section>
+</template>

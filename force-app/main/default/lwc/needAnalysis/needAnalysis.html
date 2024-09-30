@@ -1,0 +1,170 @@
+<template>
+    <!--Need Analysis-->
+    <section>
+        <div class="ApplicationForm">
+            <p>Need Analysis</p>
+        </div>
+        <br>
+        <!--KVG-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">KVG</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={kvgForNeedAnalysisForm}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--Benefit-Deductible-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Benefit-Deductible</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={benefitDeductible}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--Hospitalization insurance-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Hospitalization insurance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={hospitalizationInsurance}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--Outpatient insurance-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Outpatient insurance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={outpatient_insurance}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--Dental insurance-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Dental insurance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={dentalInsurance}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--Other-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Other</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={other}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--PREMIUM-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">PREMIUM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={preminum}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+    </section>
+    <br><br>
+</template>

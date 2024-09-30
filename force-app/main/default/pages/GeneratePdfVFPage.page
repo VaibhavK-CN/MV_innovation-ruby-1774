@@ -1,0 +1,263 @@
+<apex:page id="GeneratePdfVFPage" standardController="Lead" renderAs="pdf">
+    <apex:form style="border: 2px solid #000000; padding: 20px;" >
+        
+        <apex:pageBlock title=" ">
+            <apex:pageMessages />
+            <Left style="float:right"> <apex:image width="1.75in" url="{!$Resource.FormLogo}"/>
+            </Left>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <apex:pageBlockSection >
+                <div>
+                    <span style="font-size: 15px; font-weight: bold;">Name:</span>
+                    <strong style="font-size: 12px;color:#808080">&nbsp;&nbsp;{!Lead.Name}<br/></strong>
+                </div>
+            </apex:pageBlockSection>
+            <br/>
+            <apex:pageBlockSection >
+                <span style="font-size: 24px; font-weight: bold;">Needs Analysis</span>
+            </apex:pageBlockSection>
+            <br/>
+            <br/>
+            
+            <div style="background-color: #333; color: white; font-size: 15px; padding: 10px;">
+                1 &nbsp;&nbsp; KVG
+            </div>
+            
+            <br/>
+            <br/>
+            <span style="font-size: 15px; font-weight: bold;">Deductible:</span>
+            <strong style="font-size: 12px;color:#808080">&nbsp;&nbsp;{!Lead.Deductible_Need_Analysis__c}<br/></strong>
+            
+            <div>
+                <span style="font-size: 15px; font-weight: bold;">Employment Status:</span>
+                <strong style="font-size: 12px;color:#808080">&nbsp;&nbsp;{!Lead.EEmployment_status__c}<br/></strong>
+            </div>
+            <div>
+                <span style="font-size: 15px; font-weight: bold;">Model:</span>
+                <strong style="font-size: 12px;color:#808080">&nbsp;&nbsp;{!Lead.Model_of_insurance_need_analysis__c}<br/></strong>
+            </div>
+            <br/>
+            
+            <div style="background-color: #333; color: white; font-size: 15px; padding: 10px;">
+                2 &nbsp;&nbsp; VVG
+            </div>
+            <br/>
+            <br/>
+            <!--Benefit-Deductible-->
+            <span style="font-size: 15px; font-weight: bold;">Benefit-Deductible</span>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Lump_sum_payment_after_24_hours__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Lump_sum_payment_after_24_hours__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Lump-sum payment after 24 hours of hospitalization (worldwide)
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <!--Hospitalization insurance-->
+            <span style="font-size: 15px; font-weight: bold;">Hospitalization insurance</span>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Access_and_support_from_specialists__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Access_and_support_from_specialists__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Access and support from specialists
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Second_opinion_by_experts__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Second_opinion_by_experts__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Second opinion by experts	
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Access_to_renowned_clinics__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Access_to_renowned_clinics__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Access to renowned clinics
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Access_to_the_latest_technologies__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Access_to_the_latest_technologies__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Access to the latest technologies, high-quality materials, equipment, implants, etc.				
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Fast_tracking__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Fast_tracking__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Fast tracking
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Hospitalization_abroad__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Hospitalization_abroad__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Hospitalization abroad
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <!--Outpatient insurance-->
+            <span style="font-size: 15px; font-weight: bold;">Outpatient insurance</span>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Transportation_Rescue_domestic_foreign__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Transportation_Rescue_domestic_foreign__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Transportation/Rescue (domestic/foreign)
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Cancellation_costs__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Cancellation_costs__c, '☑', '☐')}" rendered="{!(Lead.Cancellation_costs__c == true)}" style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Cancellation costs
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Complementary_medicine_massages_homeopat__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Complementary_medicine_massages_homeopat__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Complementary medicine/massages/homeopathy (no deductible)	
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Non_mandatory_drugs__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Non_mandatory_drugs__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Non-mandatory drugs	
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Check_up_prevention_no_deductible__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Check_up_prevention_no_deductible__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Check-up/prevention (no deductible)		
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Gynecology_no_deductible__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Gynecology_no_deductible__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Gynecology (no deductible)	
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Maternity_with_waiting_period_no_deduct__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Maternity_with_waiting_period_no_deduct__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Maternity with waiting period (no deductible during pregnancy)	
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Fitness_no_deductible__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Fitness_no_deductible__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Fitness (no deductible)	
+                </strong>
+            </apex:outputPanel>
+            <br/> 
+            <apex:outputPanel rendered="{!(Lead.Sports_clubs_no_deductible__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Sports_clubs_no_deductible__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Sports clubs (no deductible)	
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Glasses_lenses_no_deductible__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Glasses_lenses_no_deductible__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Glasses/lenses (no deductible)	
+                </strong>
+            </apex:outputPanel>
+            <br/>          
+            <apex:outputPanel rendered="{!(Lead.Laser_eye_surgery_no_deductible__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Laser_eye_surgery_no_deductible__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Laser eye surgery (no deductible)	
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <br/>
+            <span style="font-size: 15px; font-weight: bold;">Dental insurance</span>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Dental_treatment_with_deductible__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Dental_treatment_with_deductible__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Dental treatment (with deductible)
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Braces_No_Deductible__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Braces_No_Deductible__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Braces (no deductible)
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <br/>
+            <br/>
+            <span style="font-size: 15px; font-weight: bold;">Other</span>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Premium_exemption_in_the_event_of_unempl__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Premium_exemption_in_the_event_of_unempl__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Premium exemption in the event of unemployment (entire household)	
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Capital_insurance_death_disability__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Capital_insurance_death_disability__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Capital insurance (death, disability)
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <apex:outputPanel rendered="{!(Lead.Legal_protection_private_transport_and__c == true)}">
+                <strong style="font-size: 12px;color:#808080">
+                    <apex:outputText value="{!IF(Lead.Legal_protection_private_transport_and__c, '☑', '☐')}" 
+                                     style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                    &nbsp;Legal protection: private, transport and health (no deductible)
+                </strong>
+            </apex:outputPanel>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div style="background-color: #333; color: white; font-size: 15px; padding: 10px;">
+                3 &nbsp;&nbsp; PREMIUM
+            </div>
+            <strong style="font-size: 12px; color:#808080">Current premium: 	
+                &nbsp;&nbsp;{!Lead.Current_premium__c}<br/></strong>
+            
+            
+            <strong style="font-size: 12px;color:#808080">Premium budget:
+                &nbsp;&nbsp;{!Lead.Premium_budget__c}<br/></strong>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,81 @@
+<template>
+    <section>
+        <div class="ApplicationForm">
+            <p>Application Family Members...</p>
+        </div>
+        <br>
+        <!--Application Family member List-->
+        <lightning-card title="Application Family Members" icon-name="custom:custom63">
+            <div class="app-member slds-m-around_medium">
+                <template if:true={wiredRecords}>
+                    <template for:each={wiredRecords} for:item="memName" for:index="index">
+                        <!--<div key={memName.Id} data-record-id={memName.Id} onclick={handleMemberClick}>
+                            <span>
+                                <span>{memName.Name}</span>
+                                <span style="margin-left: 150px;">{memName.Relationship__c}</span>
+                            </span>
+                        </div>-->
+                        <div class="slds-grid slds-gutters"  key={memName.Id} data-record-id={memName.Id} onclick={handleMemberClick}>
+                            <div class="slds-col" style="max-width: 250px;">
+                              <span style="color: rgba(11, 92, 171, 1);">{memName.Name}</span>
+                            </div><br>
+                            <div class="slds-col">
+                              <span>{memName.Relationship__c}</span>
+                            </div>
+                          </div>
+                    </template>
+                </template>
+            </div>
+        </lightning-card>
+        <br>
+        <template iterator:it={iterator}>
+            <div key={it.value.autoNumber} class="slds-box">
+                <!--Buttons-->
+            <div>
+                <span><lightning-icon icon-name="standard:people" size="medium" alternative-text="icon" style="--lwc-squareIconMediumBoundary: 1.9rem;"></lightning-icon></span> 
+                <span style="font-size: 15px;font-weight: 600;">  Add Family Member - {it.value.autoNumber}</span>
+                <span>
+                    <div class="buttons">
+                        <template if:false={it.value.recordId}>
+                            <lightning-button onclick={onRemove} if:false={it.first} variant="destructive" title="Delete Row"
+                                data-index={it.index} icon-name="utility:delete" class="slds-var-m-left_x-small">
+                            </lightning-button>
+                        </template>
+                        <lightning-button onclick={onRemove} if:true={it.value.recordId}  variant="destructive" title="Delete Row"
+                            data-index={it.index} icon-name="utility:delete" class="slds-var-m-left_x-small">
+                        </lightning-button>
+                        <lightning-button onclick={onAdd} if:true={it.last} data-index={it.index} variant="brand" title="Add Row"
+                            icon-name="utility:add" class="slds-var-m-left_x-small">
+                        </lightning-button>
+                    </div>
+                </span>
+            </div>
+                <!--Input Fields-->
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_6-of-12 slds-p-around_small">
+                        <lightning-input data-index={it.index} value={it.value.name} label="Name" onchange={nameChange} required="true">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 slds-p-around_small">
+                        <lightning-input data-index={it.index} value={it.value.relationship} label="Relationship" onchange={relationChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 slds-p-around_small">
+                        <lightning-input data-index={it.index} value={it.value.email} type="email" label="Email" onchange={emailChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 slds-p-around_small">
+                        <lightning-input data-index={it.index} value={it.value.dob} type="date" label="Date Of Birth" onchange={dobChange} required="true">
+                        </lightning-input>
+                    </div>                
+                </div>
+            </div>
+        </template>
+        <footer class="slds-m-around_medium">
+            <lightning-button onclick={handleSave} variant="brand" title="Save" label="Save" icon-name="utility:save"
+                class="slds-var-m-left_x-small"></lightning-button>
+            <lightning-button onclick={handleCancel} variant="brand" title="Cancel" label="Cancel" icon-name="utility:close"
+                class="slds-var-m-left_x-small"></lightning-button>
+        </footer>
+    </section>
+</template>

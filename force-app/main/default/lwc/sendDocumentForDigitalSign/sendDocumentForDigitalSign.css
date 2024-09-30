@@ -1,0 +1,11 @@
+.vertical-radio-group {
+    display: flex;
+    flex-direction: column;
+}
+.slds-grid {
+    justify-content: center;
+}
+
+.slds-gutters {
+    padding: 0 8px;
+}

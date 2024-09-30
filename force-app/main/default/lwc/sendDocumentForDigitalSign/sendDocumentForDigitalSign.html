@@ -1,0 +1,31 @@
+<template>
+    <template if:true={isModalShow}>
+        <lightning-card>
+            <template if:true={isShowSpinner}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+        <h3 slot="title" class="slds-var-m-left_small">
+            <lightning-icon icon-name="standard:email" size="small" class="slds-m-left_xx-medium"></lightning-icon>
+            &nbsp;&nbsp;&nbsp;Please Choose Document Template 
+        </h3>
+        <fieldset class="slds-form-element" style="padding: 16px;">
+            <legend class="slds-form-element__legend slds-form-element__label">Template Names</legend>
+            <div class="slds-form-element__control">
+                <template for:each={options} for:item="option">
+                    <span key={option.value} class="slds-radio" style="margin-bottom: 8px;">
+                        <input type="radio" id={option.value} value={option.value} name="default" onchange={handleOptionChange} />
+                        <label class="slds-radio__label" for={option.value}>
+                            <span class="slds-radio_faux"></span>
+                            <span class="slds-form-element__label" style="font-size: 14px;">{option.label}</span>
+                        </label>
+                    </span>
+                </template>
+            </div>
+        </fieldset>
+       <div slot="footer">
+        <lightning-button style="padding-bottom: 8px;" variant="brand" label="Send" title="Send" onclick={handleSend} class="slds-m-left_x-small slds-float_right"></lightning-button>
+    </div>
+    </lightning-card>
+    </template>
+
+</template>

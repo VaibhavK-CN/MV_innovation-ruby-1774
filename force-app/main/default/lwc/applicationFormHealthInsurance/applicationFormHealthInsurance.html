@@ -1,0 +1,212 @@
+<template>
+     <!--Application Form Health Insurance-->
+    <section>
+        <div class="ApplicationForm">
+            <p>Application Form Health Insurance</p>
+        </div>
+        <br>
+        <!--KVG-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">KVG</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={kvgForApplicationForm}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--VVG-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">VVG</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={vvgForApplicatioForm}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--Bank-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Bank</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={bank}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--Consultation Protocol-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Consultation Protocol</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={consultationProtocol}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--Cancellation-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Cancellation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={cancellation}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--Aftercare-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Aftercare</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={aftercare}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--System Information-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">System Information</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-view-form  
+            record-id={recordId} 
+            object-api-name={objectName}
+            mode= "view"
+            columns="2">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col" style="margin-left: 16px;">
+                    <span>
+                        <div class="slds-grid slds-gutters">
+                            <span><label class="slds-form-element__label" for="form-element-01">Created By</label></span>
+                            <span><lightning-output-field variant="label-hidden" field-name="CreatedById" ></lightning-output-field></span>,&nbsp;
+                            <span><lightning-output-field variant="label-hidden" field-name="CreatedDate"></lightning-output-field></span>
+                        </div>
+                    </span>
+                </div>
+                <div class="slds-col" style="margin-left: 61px;">
+                    <span>
+                        <div class="slds-grid slds-gutters">
+                            <span><label class="slds-form-element__label" for="form-element-01">Last Modified By</label></span>
+                            <span><lightning-output-field variant="label-hidden" field-name="LastModifiedById" ></lightning-output-field></span>,&nbsp;
+                            <span><lightning-output-field variant="label-hidden" field-name="LastModifiedDate"></lightning-output-field></span>
+                        </div>
+                    </span>
+                </div>
+            </div>
+            </lightning-record-view-form>
+        </div>
+        <br>
+        <!--Section-->
+        <!--<div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Section</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={sectionFields}
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>-->
+    </section>
+    <br><br>  
+</template>

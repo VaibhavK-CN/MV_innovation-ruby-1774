@@ -1,0 +1,57 @@
+<template>
+    <section class="main-container">
+        <div class="ApplicationForm">
+            <p>Consultation Request</p>
+        </div>
+        <template if:true={selectedLanguage}>
+            <div class="container-2">
+                <div class="header-item slds-var-p-around_medium">
+                    
+                        <div  style="width: 200px;">
+                            <lightning-combobox
+                                 name="Language"
+                                label="Language"
+                                value={selectedLanguage}
+                                options={languageOptions}
+                                onchange={handleValueChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div style="padding-top: 20px;padding-left: 30px;">
+                            <lightning-button variant="brand" label="Check Availability" title="Primary action" onclick={handleCheckAvailabilityClick} class="slds-m-left_x-small"></lightning-button>
+                        </div>                
+                </div>
+            </div>
+        </template>
+
+        <template if:true={consultantUser}>
+            <lightning-card title="Consultation Request Sent To:">
+                <template for:each={consultantUser} for:item="consultantUser">
+                    <div class="slds-m-around_medium" key={consultantUser.Id}>
+                        <p >{consultantUser.Name}</p>
+                    </div>
+                </template>
+            </lightning-card>
+        </template>
+        <template if:true={selectedConsultantUsers}>
+            <lightning-card>
+                <div class="accepted-user">
+                    <p>Accepted Users:</p>
+                </div>
+                <template for:each={selectedConsultantUsers} for:item="acceptedUser">
+                    <div class="slds-m-around_medium" key={acceptedUser.Id}>
+                        <div class="user-container">
+                            <div class="user-details">
+                                <p><b>{acceptedUser.Name}</b></p>
+                             </div>
+                            <div class="check-icon">
+                                <!-- Use your checkbox icon here -->
+                                <!-- Example: Lightning Design System checkmark icon -->
+                                <lightning-icon icon-name="utility:check" size="small" alternative-text="Checkmark"></lightning-icon>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </lightning-card>
+        </template>
+    </section>
+</template>

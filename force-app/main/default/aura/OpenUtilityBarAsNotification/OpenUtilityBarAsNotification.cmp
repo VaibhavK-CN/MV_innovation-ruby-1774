@@ -1,0 +1,9 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+ 
+  <c:publicEventSubscribed onsenddatatoaura= "{!c.getValueFromLwc}">
+    </c:publicEventSubscribed>
+    <lightning:utilityBarAPI aura:id="utilitybar" />
+     <!--   <lightning:button label="Call Modal" onclick="{!c.toggleModalBox}" />
+               Handle the custom event
+      -->
+</aura:component>

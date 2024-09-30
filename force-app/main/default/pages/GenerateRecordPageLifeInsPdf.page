@@ -1,0 +1,303 @@
+<apex:page id="GenerateRecordLifeInsPagePdf" standardController="LifeInsurance__c" renderAs="pdf">
+    <apex:stylesheet value="{!$Resource.PDFStylesVF}" />
+    <div class="logo-container">
+        <div class="logo">
+            <img src="{!$Resource.FormLogo}" alt="Company Logo" />
+        </div>
+        
+    </div>
+    
+    <apex:form style="border: 2px solid #000000; padding: 20px;">
+        <apex:pageBlock title=" ">
+            <br/>
+            <div style="background-color:#D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Life Insurance Information
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 65px; max-width: 800px;">
+                
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Name}" label="Name:" /> 
+                    <apex:outputField value="{!LifeInsurance__c.Date_of_Birth__c}" label="Date of Birth:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Social_Security_Number_AHV__c}" label="Social Security Number (AHV):"/>
+                    <apex:outputField value="{!LifeInsurance__c.Mobile__c}" label="Mobile Phone:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Phone__c}" label="Phone:" />
+                    <apex:outputField value="{!LifeInsurance__c.Telephone__c}" label="Telephone:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Email__c}" label="Email:"/>
+                    <apex:outputField value="{!LifeInsurance__c.VC_Life_Insuranc__c}" label="VC-Life Insurance:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Consultant_Health_Insuranc__c}" label="Consultant Health Insurance:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Backoffice__c}" label="Backoffice:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Call_Agent__c}" label="Call Agent(CA):"/>
+                    <apex:outputField value="{!LifeInsurance__c.Insurance_Company_Status__c}" label="Insurance Company Status:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Language_preference_LI__c}" label="Language preference:"/>
+                    
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Address Information
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 145px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Street__c}" label="Street:"/> 
+                    <apex:outputField value="{!LifeInsurance__c.City__c}" label="City:"/>
+                    <apex:outputField value="{!LifeInsurance__c.StateProvince__c}" label="State:"/>
+                    <apex:outputField value="{!LifeInsurance__c.ZipPostal_Code__c}" label="PostalCode:"/>
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Insurance Details
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Current_Health_Insurance__c}" label="Current Health Insurance:"/> 
+                    <apex:outputField value="{!LifeInsurance__c.Insured_Until__c}" label="Insured Until:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Total_Premium__c}" label="Total Premium:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Insured_Since__c}" label="Insured Since:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Premium_for_Basic_Health_Insurance__c}" label="Premium for Basic Health Insurance:"/>
+                </apex:pageBlockSection>
+            </strong>
+            
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Health Condition
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Health_Condition__c}" label="Health Condition:"/> 
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Household
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Number_of_Persons_in_Household__c}" label="Number of Persons in Household:"/> 
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Feedback
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Feedback__c}" label="Feedback:"/> 
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Additional Information
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    
+                    <apex:outputField value="{!LifeInsurance__c.Lead_Status__c}" label="LifeInsurance__c Status:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Lead_Source__c}" label="LifeInsurance__c Source:"/> 
+                    <apex:outputField value="{!LifeInsurance__c.OwnerId}" label="LifeInsurance__c Owner:"/> 
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Description Information
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Hospitalization_insurance__c}" label="Hospitalization insurance:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Outpatient_insurance__c}" label="Outpatient insurance:"/> 
+                    <apex:outputField value="{!LifeInsurance__c.Premium_exemption__c}" label="Premium exemption"/> 
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <b><div style="background-color: aqua; color: Black; font-size: 20px; padding: 10px; text-align:center;">
+                &nbsp;&nbsp; Need Analysis
+                </div></b>
+            
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; KVG 
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Deductible_Application_Form__c}" label="Deductible:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Model_of_insurance_need_analysis__c}" label="Model (of insurance):"/> 
+                    <apex:outputField value="{!LifeInsurance__c.Employment_status__c}" label="Employment status:"/> 
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Benefit-Deductible 
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Lump_sum_payment_after_24_hours__c}" label="Lump-sum payment after 24 hours"/>
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Hospitalization insurance 
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Access_and_support_from_specialists__c}" label="Access and support from specialists"/>
+                    <apex:outputField value="{!LifeInsurance__c.Second_opinion_by_experts__c}" label="Second opinion by experts"/>
+                    <apex:outputField value="{!LifeInsurance__c.Access_to_renowned_clinics__c}" label="Access to renowned clinics"/>
+                    <apex:outputField value="{!LifeInsurance__c.Access_to_the_latest_technologies__c}" label="Access to the latest technologies"/>
+                    <apex:outputField value="{!LifeInsurance__c.Fast_tracking__c}" label="Fast tracking"/>
+                    <apex:outputField value="{!LifeInsurance__c.Hospitalization_abroad__c}" label="Hospitalization abroad"/>
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Outpatient insurance
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.TransportationRescue_domesticforeign__c}" label="Transportation/Rescue (domestic/foreign)"/>
+                    <apex:outputField value="{!LifeInsurance__c.Cancellation_costs__c}" label="Cancellation costs"/>
+                    <apex:outputField value="{!LifeInsurance__c.Complementary_medicinemassages__c}" label="Complementary medicine/massages"/>
+                    <apex:outputField value="{!LifeInsurance__c.Non_mandatory_drugs__c}" label="Non-mandatory drugs"/>
+                    <apex:outputField value="{!LifeInsurance__c.Check_upprevention_no_deductible__c}" label="Check-up/prevention (no deductible)"/>
+                    <apex:outputField value="{!LifeInsurance__c.Gynecology_no_deductible__c}" label="Gynecology (no deductible)"/>
+                    <apex:outputField value="{!LifeInsurance__c.Maternity_with_waiting_period__c}" label="Maternity with waiting period"/>
+                    <apex:outputField value="{!LifeInsurance__c.Fitness_no_deductible__c}" label="Fitness (no deductible)"/>
+                    <apex:outputField value="{!LifeInsurance__c.Sports_clubs_no_deductible_Name__c}" label="Sports clubs (no deductible) Name"/>
+                    <apex:outputField value="{!LifeInsurance__c.Glasseslenses_no_deductible__c}" label="Glasses lenses (no deductible)"/>
+                    <apex:outputField value="{!LifeInsurance__c.Laser_eye_surgery_no_deductible__c}" label="Laser eye surgery (no deductible)"/>    
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Dental insurance 
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Dental_treatment_with_deductible__c}" label="Dental treatment (with deductible)"/>
+                    <apex:outputField value="{!LifeInsurance__c.Braces_no_deductible__c}" label="Braces (No Deductible)"/>
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Other 
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Premium_exemption__c}" label="Premium exemption"/>
+                    <apex:outputField value="{!LifeInsurance__c.Capital_insurance_death_disability__c}" label="Capital insurance (death, disability)"/>
+                    <apex:outputField value="{!LifeInsurance__c.Legal_protection__c}" label="Legal protection"/>
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; PREMIUM 
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Current_premium__c}" label="Current premium:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Premium_budget__c}" label="Premium budget:"/>
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <b><div style="background-color: aqua; color: Black; font-size: 20px; padding: 10px; text-align:center;">
+                &nbsp;&nbsp; Application Form Health Insurance
+                </div></b>
+            
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; KVG 
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Age__c}" label="Age"/>
+                    <apex:outputField value="{!LifeInsurance__c.Start_of_Insurance_KVG__c}" label="Start of Insurance:"/>
+                    <apex:outputField value="{!LifeInsurance__c.AgePopulate__c}" label="AgePopulate:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Accident__c}" label="Accident"/>
+                    <apex:outputField value="{!LifeInsurance__c.Insurance_Company_KVG__c}" label="Insurance Company KVG:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Monthly_Premium_netto_KVG__c}" label="Monthly Premium netto KVG:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Model_of_insurance_Application_Form__c}" label="Model of insurance Application Form:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Deductible_Application_Form__c}" label="Deductible Application Form:"/>
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; VVG 
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Insurance_Company_VVG__c}" label="Insurance Company VVG:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Start_of_Insurance_VVG__c}" label="Start of Insurance VVG:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Products__c}" label="Products"/>
+                    <apex:outputField value="{!LifeInsurance__c.Monthly_Premium_netto_VVG__c}" label="Monthly Premium netto VVG:"/>
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Bank 
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Name_of_Bank__c}" label="Name of Bank:"/>
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Consultation Protocol 
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.The_customer_cancels_his_insurance_contr__c}" label="The customer cancels his insurance contr:"/>
+                    <apex:outputField value="{!LifeInsurance__c.The_customer_authorizes_the_intermediary__c}" label="The customer authorizes the intermediary:"/>
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Cancellation
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Cancelation_Date_KVG__c}" label="Cancelation Date KVG:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Cancelation_Date_VVG__c}" label="Cancelation Date VVG:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Cancel_KVG__c}" label="Cancel KVG:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Cancel_VVG__c}" label="Cancel VVG:"/>
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; Aftercare
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.Recommendation__c}" label="Recommendation:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Follow_Up_Appointment__c}" label="Follow Up Appointment:"/>
+                    <apex:outputField value="{!LifeInsurance__c.HousholdLiability__c}" label="Houshold Liability:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Legal__c}" label="Legal:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Pillar__c}" label="Pillar:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Car_Insurance__c}" label="Car Insurance:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Building_Insurance__c}" label="Building Insurance:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Travel_Insurance__c}" label="Travel Insurance:"/>
+                    <apex:outputField value="{!LifeInsurance__c.Google_Review__c}" label="Google Review:"/>
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div style="background-color: #D3D3D3; color: #353935; font-size: 17px; padding: 5px;">
+                &nbsp;&nbsp; System Information
+            </div>
+            <strong style="font-size: 14px;color:#454545;margin-right: 60px;max-width: 800px;">
+                <apex:pageBlockSection title="" collapsible="false" columns="2">
+                    <apex:outputField value="{!LifeInsurance__c.CreatedById}" label="Created By:"/>
+                    <apex:outputField value="{!LifeInsurance__c.LastModifiedById}" label="Last modified By:"/>
+                </apex:pageBlockSection>
+            </strong>
+            <br/>
+
+        </apex:pageBlock> 
+        
+        
+    </apex:form>
+</apex:page>

@@ -1,0 +1,324 @@
+<template>
+    <!--Section 1-->
+    <section class="container">
+        <!--Lead Information-->
+            <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Lead Information</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <!--Lead Information View form-->
+        <div class="slds-p-left_large slds-p-right_medium">
+            <template if:true={isShowLeadView}>
+                <lightning-record-view-form record-id={recordId} object-api-name={objectName} 
+                    onsuccess={handleSuccess} onsubmit={validateFields} onerror={handleError} onchange={handleChange}>
+                    <lightning-messages data-id="message">
+                    </lightning-messages>
+                        <div class="slds-grid slds-wrap exampleHolder">
+                            <template if:true={fields}>
+                                <template for:each={fields} for:item="f">
+                                    <div key={f.Id} class="underline-block slds-col slds-size_1-of-2 slds-grid slds-gutters">
+                                        <span class="field-class">
+                                            <lightning-output-field field-name={f.APIName}></lightning-output-field>
+                                        </span>
+                                        <span>
+                                        <lightning-button-icon  
+                                        style="    --slds-g-color-border-base-4: rgb(255,255,255)"
+                                        icon-name="utility:edit" 
+                                        onclick={handleEdit}>
+                                        </lightning-button-icon>
+                                        </span>
+                                    </div>
+                                </template>
+                        </template>
+                        <template if:false={fields}>
+                            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                        </template>
+                    </div>
+                </lightning-record-view-form>            
+            </template>
+            <!--Lead Information Edit form-->
+            <template if:true={isShowLeadEdit}>
+                <lightning-record-edit-form record-id={recordId} object-api-name={objectName} 
+                onsuccess={handleSuccess} onsubmit={validateFields} onerror={handleError}>
+                <lightning-messages data-id="message">
+                </lightning-messages>
+                <div class="slds-grid slds-wrap">
+                    <template if:true={fields}>
+                        <template for:each={fields} for:item="f">
+                            <div key={f.Id} class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name={f.APIName}></lightning-input-field>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+                </lightning-record-edit-form>   
+                <!--Footer Buttons-->
+                <div class="slds-align_absolute-center slds-p-around_medium">
+                    <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>&nbsp;&nbsp;&nbsp;
+                    <lightning-button type="submit" variant="brand" label="Save" onclick={saveClick} class="slds-button_brand"></lightning-button>
+                </div>
+            </template>
+        </div>
+        <br>        
+        <!--Address-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Address Information</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+                record-id={recordId} 
+                object-api-name={objectName}
+                fields={addressFields} 
+                columns="2" 
+                onsubmit={handleSubmit}>
+            </lightning-record-form>
+            <template if:true={isAddress}>
+                <div class="map-controller">
+                    <lightning-map map-markers={mapMarkers} zoom-level="15"> </lightning-map>
+                </div>
+            </template>
+        </div>
+        <br>
+        <!--Insurance Details-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Insurance Details</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={insuranceDetailFields} 
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--Health Condition-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Health Condition</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={healthCondition} 
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--Household-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Household</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={household} 
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>
+        <!--Feedback-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Feedback</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={feedback} 
+            columns="2" 
+            >
+            </lightning-record-form>
+        </div>
+        <br>
+        <template if:false={isCallAgent}>
+        <!--Additional Information-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Additional Information</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={additionalInformation} 
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+        <br>            
+        </template>
+        <!--Description Information-->
+        <template if:false={isCallAgent}>
+            <div class="slds-page-header">
+                <div class="slds-page-header__row">
+                    <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                            <div class="slds-media__body">
+                                <p class="slds-page-header__name-meta" style="font-size: 16px;">Description Information</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="slds-p-left_large slds-p-right_medium">
+                <lightning-record-form 
+                record-id={recordId} 
+                object-api-name={objectName}
+                fields={descriptionInformation} 
+                columns="2" 
+                onsubmit={handleSubmit}>
+                </lightning-record-form>
+            </div>
+            <br>            
+        </template>
+        <!--Commission Detail-->
+        <div class="slds-page-header">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__name-meta" style="font-size: 16px;">Commission Details</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="slds-p-left_large slds-p-right_medium">
+            <lightning-record-form 
+            record-id={recordId} 
+            object-api-name={objectName}
+            fields={commissionDetails} 
+            columns="2" 
+            onsubmit={handleSubmit}>
+            </lightning-record-form>
+        </div>
+         <br>
+         <!--System Informaton-->
+         <template if:true={isShowSystemInfo}>
+            <div class="slds-page-header">
+                <div class="slds-page-header__row">
+                    <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                            <div class="slds-media__body">
+                                <p class="slds-page-header__name-meta" style="font-size: 16px;">System Information</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="slds-p-left_large slds-p-right_medium">
+                <div class="slds-form">
+                    <lightning-record-view-form 
+                    record-id={recordId} 
+                    object-api-name={objectName} 
+                    mode= "view"
+                    columns="2">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col">
+                            <span>
+                                <div class="slds-grid slds-gutters">
+                                    <span><label class="slds-form-element__label" for="form-element-01">Created By</label></span>
+                                    <span><lightning-output-field variant="label-hidden" field-name="CreatedById" ></lightning-output-field></span>,&nbsp;
+                                    <span><lightning-output-field variant="label-hidden" field-name="CreatedDate"></lightning-output-field></span>
+                                </div>
+                            </span>
+                          </div>
+                          <div class="slds-col" style="margin-left: 61px;">
+                            <span>
+                                <div class="slds-grid slds-gutters">
+                                    <span><label class="slds-form-element__label" for="form-element-01">Last Modified By</label></span>
+                                    <span><lightning-output-field variant="label-hidden" field-name="LastModifiedById" ></lightning-output-field></span>,&nbsp;
+                                    <span><lightning-output-field variant="label-hidden" field-name="LastModifiedDate"></lightning-output-field></span>
+                                </div>
+                            </span>
+                          </div>
+                    </div>
+                    </lightning-record-view-form> 
+                </div>
+            </div>
+             <br> <br>
+        </template>
+    </section>
+    
+    <template if:false={isCallAgent}>
+        <!--Application Form Health Insurance-->
+        <template if:false={insuranceTypeLifeInsurance}>
+            <c-application-form-health-insurance record-id={recordId}></c-application-form-health-insurance>
+        </template>
+        <!--application family members-->
+        <c-application-family-member record-id={recordId}></c-application-family-member> 
+        <!--Need Analysis-->    
+        <template if:false={insuranceTypeLifeInsurance}>
+            <c-need-analysis record-id={recordId}></c-need-analysis>
+        </template>       
+    </template>
+</template>

@@ -1,0 +1,86 @@
+<apex:page renderAs="pdf">
+    <!-- Table-based layout for PDF rendering -->
+    <table style="width: 100%; table-layout: fixed; border-collapse: collapse;">
+        <tr>
+            <!-- Left Column -->
+            <td style="width: 50%; vertical-align: top; padding: 10px; border: 1px solid #ddd;">
+                <h2 style="font-size: 14px; margin-bottom: 8px;">Art. 45 Informationspflicht</h2>
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Firma</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                    miavita GmbH (Register Nr. 36017)<br/>Frohburgstrasse 17<br/>4600 Olten
+                </p>
+
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Status</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                    In Übereinstimmung mit Art. 45 VAG teilen wir mit, dass miavita GmbH überwiegend direkte Vertragsbeziehungen 
+                    mit den nachstehenden Kranken-, Leben- und Sachversicherungsgesellschaften führt. Zusätzliche Vertragsbindungen 
+                    existieren durch Tochtergesellschaften wie alcuris AG und SSM Partner AG.
+                </p>
+
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Krankenversicherungen</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                    Assura, Concordia, CSS, Groupe Mutuel, Helsana, Innova, KPT, &Ouml;KK, Sanitas, Swica, Sympany, Visana
+                </p>
+
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Leben- und Nichtlebensversicherungen</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                    Allianz, ASGA Pensionskasse, AutoMate Insurance, AXA ARAG, Basler Versicherungen, Coop Rechtsschutz, 
+                    Die Mobiliar, Emmental Versicherung, ERV (Europ&auml;ische Reiseversicherung), Generali, Helvetia, 
+                    Liechtenstein Life, Pax, Smile.direct, Swiss Life, SwissCaution, TSM Versicherungen, Vaudoise, YOUPLUS Assurance
+                </p>
+            </td>
+
+            <!-- Right Column -->
+            <td style="width: 50%; vertical-align: top; padding: 10px; border: 1px solid #ddd;">
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Aus- und Weiterbildung Versicherungsvermittler</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                    In diesem Dokument sind die Details zur Aus- und Weiterbildung unserer Versicherungsvermittler präzise verzeichnet. 
+                    Für ergänzende Auskünfte hinsichtlich der Qualifikationen und Registrierungen unserer Fachkräfte ist unsere Organisation 
+                    jederzeit ansprechbar.
+                </p>
+
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Beratungshaftung</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                    Für Fehler, Nachlässigkeit oder unrichtige Auskünfte durch den Berater im Zusammenhang mit der Vermittlung 
+                    von Versicherungsanträgen haften wir als ungebundener Vermittler bzw. unsere Berufshaftpflicht.
+                </p>
+
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Datenschutz/Geheimhaltung</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                    Ihre persönlichen Daten, die Sie uns im Zusammenhang mit der Versicherungsberatung anvertrauen, werden 
+                    unsererseits lediglich zur Beratung und Abwicklung der Antragsstellung benötigt. Die gesetzlichen Bestimmungen 
+                    des Datenschutzes werden stets beachtet.
+                </p>
+
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Modalitäten der Kompensationsstruktur</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                    Aufgrund der Komplexität der Partnerschaften wird die Aufklärung über die Modalitäten dieser Kompensationen, 
+                    einschließlich Art und Umfang, primär verbal während der Konsultationen vorgenommen.
+                </p>
+
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Kontakt</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                    Für weitere Auskünfte oder Fragen: <br/>
+                    <a href="mailto:backoffice@mia-vita.ch">backoffice@mia-vita.ch</a>
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Signature Section -->
+    <div style="margin-top: 40px;">
+        <h2 style="font-size: 14px; margin-bottom: 8px;">Unterschriften</h2>
+
+        <label style="font-weight: bold;" for="vermittler-name">Vermittler Name</label>
+        <input type="text" id="vermittler-name" style="width: 100%; padding: 5px; font-size: 12px;" placeholder="Vermittler Name"/>
+
+        <label style="font-weight: bold;" for="zertifizierung">Zertifizierung</label>
+        <input type="text" id="zertifizierung" style="width: 100%; padding: 5px; font-size: 12px;" placeholder="Zertifizierung"/>
+
+        <label style="font-weight: bold;" for="versicherungsnehmer-name">Versicherungsnehmer Name</label>
+        <input type="text" id="versicherungsnehmer-name" style="width: 100%; padding: 5px; font-size: 12px;" placeholder="Versicherungsnehmer Name"/>
+
+        <label style="font-weight: bold;" for="plz-ort">PLZ, Ort</label>
+        <input type="text" id="plz-ort" style="width: 100%; padding: 5px; font-size: 12px;" placeholder="PLZ, Ort"/>
+    </div>
+</apex:page>

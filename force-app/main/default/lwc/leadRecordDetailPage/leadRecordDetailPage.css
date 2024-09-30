@@ -1,0 +1,30 @@
+.container {
+    width: 100% !important;
+	margin-top: 8px;
+    max-height: 1743;
+    background-color: white;
+}
+.field-class {
+    width: 320px;
+    text-decoration : underline ;
+}
+.slds-form-element__label {
+    max-width: 150px;
+}
+.ApplicationForm {
+    width: 100%;
+    height: 40px;
+    background-color: aqua;
+    font-size: 24px;
+    color: rgb(92, 91, 91);
+    font-weight: 700;
+    text-align: center;
+}
+.exampleHolder{
+    position: relative;
+    width: 100%;
+    vertical-align: middle;
+}
+.map-controller {
+    width: 25%;
+}

@@ -1,0 +1,242 @@
+<apex:page id="PdfNeedAnalysisLifeInsVF" standardController="LifeInsurance__c" renderAs="pdf">
+    <apex:form style="border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 20px;" >
+      
+        <apex:pageBlock title=" ">
+            <apex:pageMessages />
+            <Left style="float:right;background: #333"> <apex:image width="1.75in" url="{!$Resource.FormLogo}"/>
+            </Left>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <apex:pageBlockSection >
+                <span style="font-size: 32px; font-weight: bold;color:#7f4e4e;">Needs Analysis</span>
+            </apex:pageBlockSection>
+            <br/>
+            <apex:pageBlockSection >
+                  <div>
+                <span style="font-size: 15px; font-weight: bold;">Name:</span>
+                <strong style="font-size: 12px;color:#808080">&nbsp;&nbsp;{!LifeInsurance__c.Name}<br/></strong>
+            </div>
+            </apex:pageBlockSection>
+            <br/>
+            
+            <br/>
+            
+            <div style="background-color: #333; color: white; font-size: 15px; padding: 10px;">
+                1 &nbsp;&nbsp; KVG
+            </div>
+            
+            <br/>
+            <br/>
+            
+            <span style="font-size: 15px; font-weight: bold;">Deductible:</span>
+            <strong style="font-size: 12px;color:#808080">&nbsp;&nbsp;{!LifeInsurance__c.Deductible_Need_Analysis__c}<br/></strong>
+            
+            <div>
+                <span style="font-size: 15px; font-weight: bold;">Employment Status:</span>
+                <strong style="font-size: 12px;color:#808080">&nbsp;&nbsp;{!LifeInsurance__c.Employment_status__c}<br/></strong>
+            </div>
+            <div>
+                <span style="font-size: 15px; font-weight: bold;">Model:</span>
+                <strong style="font-size: 12px;color:#808080">&nbsp;&nbsp;{!LifeInsurance__c.Model_of_insurance_need_analysis__c}<br/></strong>
+            </div>
+            <br/>
+            
+            <div style="background-color: #333; color: white; font-size: 15px; padding: 10px;">
+                2 &nbsp;&nbsp; VVG
+            </div>
+            <br/>
+            <br/>
+            <span style="font-size: 15px; font-weight: bold;">Benefit-Deductible</span>
+            <br/>
+            
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Lump_sum_payment_after_24_hours__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Lump-sum payment after 24 hours of hospitalization (worldwide)
+            </strong>
+            
+            <br/>
+            
+            <span style="font-size: 15px; font-weight: bold;">Hospitalization insurance</span>
+            <br/>
+            
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Access_and_support_from_specialists__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Access and support from specialists
+            </strong>
+            <br/>
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Second_opinion_by_experts__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Second opinion by experts	
+            </strong>
+            <br/>
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Access_to_renowned_clinics__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Access to renowned clinics
+            </strong>
+            <br/>
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Access_to_the_latest_technologies__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Access to the latest technologies, high-quality materials, equipment, implants, etc.				
+            </strong>
+            <br/>
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Fast_tracking__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Fast tracking
+            </strong>
+            <br/>
+           <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Hospitalization_abroad__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Hospitalization abroad
+            </strong>
+            
+            <br/>
+            <span style="font-size: 15px; font-weight: bold;">Outpatient insurance</span>
+            <br/>
+            
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.TransportationRescue_domesticforeign__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Transportation/Rescue (domestic/foreign)
+            </strong>
+            <br/>
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Cancellation_costs__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Cancellation costs
+            </strong>
+            <br/>
+              <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Complementary_medicinemassages__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Complementary medicine/massages/homeopathy (no deductible)	
+            </strong>
+            <br/>
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Non_mandatory_drugs__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Non-mandatory drugs	
+            </strong>
+            
+            <br/>
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Check_upprevention_no_deductible__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Check-up/prevention (no deductible)		
+            </strong>
+            
+            <br/>
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Gynecology_no_deductible__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Gynecology (no deductible)	
+            </strong>
+            <br/>
+            
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Maternity_with_waiting_period__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Maternity with waiting period (no deductible during pregnancy)	
+            </strong>
+            <br/>
+            
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Fitness_no_deductible__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Fitness (no deductible)	
+            </strong>
+             <br/>           
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Sports_clubs_no_deductible_Name__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Sports clubs (no deductible)	
+            </strong>
+            <br/>
+            
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Glasseslenses_no_deductible__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Glasses/lenses (no deductible)	
+            </strong>
+              <br/>          
+            
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Laser_eye_surgery_no_deductible__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Laser eye surgery (no deductible)	
+            </strong>
+            
+            <br/>
+            <br/>
+            <span style="font-size: 15px; font-weight: bold;">Dental insurance</span>
+            <br/>
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Dental_treatment_with_deductible__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Dental treatment (with deductible)
+            </strong>
+            <br/>
+            
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Braces_no_deductible__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Braces (no deductible)
+            </strong>
+            
+            <br/>
+            <br/>
+            <br/>
+            <span style="font-size: 15px; font-weight: bold;">Other</span>
+            <br/>
+            
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Premium_exemption__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Premium exemption in the event of unemployment (entire household)	
+            </strong>
+            
+            <br/>
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Capital_insurance_death_disability__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Capital insurance (death, disability)
+            </strong>
+
+            <br/>
+            <strong style="font-size: 12px;color:#808080">
+                <apex:outputText value="{!IF(LifeInsurance__c.Legal_protection__c, '☑', '☐')}" 
+                                 style="font-family: 'Arial Unicode MS'; font-size: 14px;"/>
+                &nbsp;Legal protection: private, transport and health (no deductible)
+            </strong>
+            
+            <br/>
+            <br/>
+            
+            <br/>
+            <br/>
+            <div style="background-color: #333; color: white; font-size: 15px; padding: 10px;">
+                3 &nbsp;&nbsp; PREMIUM
+            </div>
+            <strong style="font-size: 12px; color:#808080">Current premium: 	
+                &nbsp;&nbsp;{!LifeInsurance__c.Current_premium__c}<br/></strong>
+            
+            
+            <strong style="font-size: 12px;color:#808080">Premium budget:
+                &nbsp;&nbsp;{!LifeInsurance__c.Premium_budget__c}<br/></strong>
+            
+            
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

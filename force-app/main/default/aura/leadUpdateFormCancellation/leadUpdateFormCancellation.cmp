@@ -1,0 +1,32 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="LeadControllerForCancellationLink" >
+    <aura:attribute name="leadId" type="String" />
+    <aura:attribute name="name" type="String" />
+    <aura:attribute name="email" type="String" />
+    <aura:attribute name="dob" type="Date" />
+    <aura:attribute name="phone" type="String" />
+    <aura:attribute name="cancellationReason" type="String" />
+    
+    <div>
+        <label>Name:</label>
+        <input type="text" value="{!v.name}" />
+    </div>
+    <div>
+        <label>Email:</label>
+        <input type="text" value="{!v.email}" />
+    </div>
+    <div>
+        <label>Date of Birth:</label>
+        <input type="date" value="{!v.dob}" />
+    </div>
+    <div>
+        <label>Phone:</label>
+        <input type="text" value="{!v.phone}" />
+    </div>
+    <div>
+        <label>Cancellation Reason:</label>
+        <input type="text" value="{!v.cancellationReason}" />
+    </div>
+    <button onclick="{!c.saveLead}">Save</button>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />    
+</aura:component>

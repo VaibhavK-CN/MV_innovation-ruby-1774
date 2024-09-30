@@ -1,0 +1,15 @@
+.main-container {
+    width: 100% !important;
+    background-color: white !important;
+    
+}
+.container-2 {
+    width: 100% !important;
+}
+.container-3 {
+    width: 25% !important;
+}
+.header-item {
+    display: flex;
+    align-items: center;
+}
