@@ -3,7 +3,6 @@ import { LightningElement, api, track } from 'lwc';
 export default class ChatModal extends LightningElement {
     // @api property to receive modal state from parent
     @api isModalOpen;
-    
 
     // Array of tabs for the tabset
     @track tabs = [
@@ -18,19 +17,5 @@ export default class ChatModal extends LightningElement {
         // Dispatch an event to inform the parent component to close the modal
         const closeEvent = new CustomEvent('close');
         this.dispatchEvent(closeEvent);
-    }
-
-
-
-    // Method to close the modal
-    closeModal() {
-        const closeEvent = new CustomEvent('close');
-        this.dispatchEvent(closeEvent);
-    }
-
-    // Method to trigger opening of the second modal
-    handleReply() {
-        const replyEvent = new CustomEvent('reply');
-        this.dispatchEvent(replyEvent);
     }
 }

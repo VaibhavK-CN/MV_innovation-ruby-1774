@@ -1,0 +1,18 @@
+<apex:page standardController="Lead" extensions="LeadAssignmentController">
+    <apex:form >
+        <apex:pageBlock title="Assign Lead">
+            <apex:pageBlockSection >
+                <apex:selectList value="{!selectedProfileId}" size="1" id="profileSelect" 
+                                 onchange="submit();">
+                    <apex:selectOptions value="{!profileOptions}"/>
+                </apex:selectList>
+                
+                <apex:selectList value="{!selectedUserId}" size="1" id="userSelect">
+                    <apex:selectOptions value="{!userOptions}"/>
+                </apex:selectList>
+
+                <apex:commandButton action="{!assignLead}" value="Assign Lead"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

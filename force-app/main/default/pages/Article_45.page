@@ -1,10 +1,10 @@
-<apex:page renderAs="pdf">
+<apex:page standardController="Lead" renderAs="pdf">
     <!-- Table-based layout for PDF rendering -->
-    <table style="width: 100%; table-layout: fixed; border-collapse: collapse;">
+    <table style="width: 100%; table-layout: fixed;">
         <tr>
             <!-- Left Column -->
-            <td style="width: 50%; vertical-align: top; padding: 10px; border: 1px solid #ddd;">
-                <h2 style="font-size: 14px; margin-bottom: 8px;">Art. 45 Informationspflicht</h2>
+            <td style="width: 50%; vertical-align: top; padding: 10px;">
+                <h2 style="font-size: 24px; margin-bottom: 8px;">Art. 45 Informationspflicht</h2>
                 <h3 style="font-size: 14px; margin-bottom: 8px;">Firma</h3>
                 <p style="font-size: 12px; margin-bottom: 10px;">
                     miavita GmbH (Register Nr. 36017)<br/>Frohburgstrasse 17<br/>4600 Olten
@@ -12,9 +12,8 @@
 
                 <h3 style="font-size: 14px; margin-bottom: 8px;">Status</h3>
                 <p style="font-size: 12px; margin-bottom: 10px;">
-                    In Übereinstimmung mit Art. 45 VAG teilen wir mit, dass miavita GmbH überwiegend direkte Vertragsbeziehungen 
-                    mit den nachstehenden Kranken-, Leben- und Sachversicherungsgesellschaften führt. Zusätzliche Vertragsbindungen 
-                    existieren durch Tochtergesellschaften wie alcuris AG und SSM Partner AG.
+                   In Übereinstimmung mit Art. 45 VAG teilen wir mit, dass miavita GmbH überwiegend direkte Vertragsbeziehungen mit den nachstehenden Kran ken, Leben und Sachversicherungsgesellschaften führt. Zusätzliche Vertragsbindungen existieren durch Tochtergesellschaften wie alcuris AG und SSM Partner AG, wodurch die Verbindung zu den Versicherern intensiviert wird. Ferner kooperieren wir mit Brokern, insbesondere Pro care Vorsorge AG, die ebenfalls direkt vertraglich mit den aufgeführten Gesellschaften verknüpft ist. Diese vielfältigen Geschäftsverbindungen qualifizieren uns als ungebundenen Versicherungsvermittler, wobei die uneingeschränkte Vermittlungskompetenz für alle genannten Gesell schaften erhalten bleibt.
+
                 </p>
 
                 <h3 style="font-size: 14px; margin-bottom: 8px;">Krankenversicherungen</h3>
@@ -24,63 +23,79 @@
 
                 <h3 style="font-size: 14px; margin-bottom: 8px;">Leben- und Nichtlebensversicherungen</h3>
                 <p style="font-size: 12px; margin-bottom: 10px;">
-                    Allianz, ASGA Pensionskasse, AutoMate Insurance, AXA ARAG, Basler Versicherungen, Coop Rechtsschutz, 
-                    Die Mobiliar, Emmental Versicherung, ERV (Europ&auml;ische Reiseversicherung), Generali, Helvetia, 
-                    Liechtenstein Life, Pax, Smile.direct, Swiss Life, SwissCaution, TSM Versicherungen, Vaudoise, YOUPLUS Assurance
-                </p>
-            </td>
+                    Allianz, ASGA Pensionskasse, AutoMate Insurance, AXA ARAG, Basler Versicherungen, Coop Rechtsschutz, Die Mobiliar, Emmental Versicherung, ERV (Europäische Reiseversicherung), Generali, Helvetia, Liechtenstein Life, Pax, Smile.direct, Swiss Life, Swiss- Caution, TSM Versicherungen, Vaudoise, YOUPLUS Assurance SCHWEIZ AG, Zugerberg Finanz AG, Zürich Versicherungs- Gesellschaft AG
 
-            <!-- Right Column -->
-            <td style="width: 50%; vertical-align: top; padding: 10px; border: 1px solid #ddd;">
-                <h3 style="font-size: 14px; margin-bottom: 8px;">Aus- und Weiterbildung Versicherungsvermittler</h3>
-                <p style="font-size: 12px; margin-bottom: 10px;">
-                    In diesem Dokument sind die Details zur Aus- und Weiterbildung unserer Versicherungsvermittler präzise verzeichnet. 
-                    Für ergänzende Auskünfte hinsichtlich der Qualifikationen und Registrierungen unserer Fachkräfte ist unsere Organisation 
-                    jederzeit ansprechbar.
                 </p>
-
+                
                 <h3 style="font-size: 14px; margin-bottom: 8px;">Beratungshaftung</h3>
                 <p style="font-size: 12px; margin-bottom: 10px;">
-                    Für Fehler, Nachlässigkeit oder unrichtige Auskünfte durch den Berater im Zusammenhang mit der Vermittlung 
-                    von Versicherungsanträgen haften wir als ungebundener Vermittler bzw. unsere Berufshaftpflicht.
+                    Für Fehler, Nachlässigkeit oder unrichtige Auskünfte durch den Berater im Zusammenhang mit der Vermittlung von Versicherungsanträgen haf- ten wir als ungebundener Vermittler bzw. unsere Berufshaftpflicht.
+
                 </p>
 
                 <h3 style="font-size: 14px; margin-bottom: 8px;">Datenschutz/Geheimhaltung</h3>
                 <p style="font-size: 12px; margin-bottom: 10px;">
-                    Ihre persönlichen Daten, die Sie uns im Zusammenhang mit der Versicherungsberatung anvertrauen, werden 
-                    unsererseits lediglich zur Beratung und Abwicklung der Antragsstellung benötigt. Die gesetzlichen Bestimmungen 
-                    des Datenschutzes werden stets beachtet.
+                   Ihre persönlichen Daten, die Sie uns im Zusammenhang mit der Versi- cherungsberatung anvertrauen, werden unsererseits lediglich zur Bera- tung und Abwicklung der Antragsstellung benötigt. Wir haben alle not- wendigen Vorkehrungen getroffen, um die gesetzlichen Bestimmungen des Datenschutzes zu beachten. Bearbeitet werden die Daten nur in dem Umfang, als es für die Abwicklung und Erfüllung unseres Vertragsver- hältnisses notwendig ist und es die gesetzlichen Bestimmungen zwin- gend verlangen. Ihre Daten werden, neben unserer eigenen Nutzung, auch mit den betreffenden Versicherungsunternehmen geteilt, bei denen Sie Offerten anfordern oder bereits Versicherungsleistungen in An- spruch nehmen. Dies schliesst unsere Vertragspartner mit ein, bei denen Sie Angebote einholen oder Anträge stellen. Es ist uns ein wichtiges An- liegen zu betonen, dass diese Datenübermittlung ausschliesslich zum
+
+
+
                 </p>
+            </td>
+
+            <!-- Right Column -->
+            <td style="width: 50%; vertical-align: top; padding-top: 50px;">
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                   Zweck der Angebotserstellung oder Vertragsabwicklung erfolgt und stets unter Wahrung höchster Diskretion gegenüber Dritten stattfindet. Hierbei gelten die Versicherer, von denen Sie Offerten einholen möch- ten, nicht als "Dritte" im Sinne dieser Vertraulichkeitszusage. Wir versi- chern Ihnen, dass alle Informationen, die uns im Zuge der Beratung zu- gänglich gemacht werden, mit grösster Sorgfalt und unter strenger Ein- haltung der Datenschutzrichtlinien behandelt werden. Schliesslich wer- den die Personendaten nur solange aufbewahrt, als es aufgrund vertrag- licher und gesetzlicher Bestimmungen zwingend notwendig ist. An- schliessend werden sie wieder gelöscht.Modalitäten der Kompensationsstruktur
+
+
+
+                </p>
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Aus- und Weiterbildung Versicherungsvermittler</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                   In diesem Dokument sind die Details zur Aus- und Weiterbildung unse- rer Versicherungsvermittler präzise verzeichnet. Für ergänzende Aus- künfte hinsichtlich der Qualifikationen und Registrierungen unserer Fachkräfte ist unsere Organisation jederzeit ansprechbar. Wir sichern zu, dass alle relevanten Informationen mit gebotener Sorgfalt und in trans- parenter Manier zur Verfügung gestellt werden.
+
+                </p>
+
+               
 
                 <h3 style="font-size: 14px; margin-bottom: 8px;">Modalitäten der Kompensationsstruktur</h3>
                 <p style="font-size: 12px; margin-bottom: 10px;">
-                    Aufgrund der Komplexität der Partnerschaften wird die Aufklärung über die Modalitäten dieser Kompensationen, 
-                    einschließlich Art und Umfang, primär verbal während der Konsultationen vorgenommen.
+                    Aufgrund der Komplexität und Vielzahl an Partnerschaften, die mit weit- reichenden Kompensationsstrukturen verbunden sind, wird die Aufklä- rung über die Modalitäten dieser Kompensationen, einschliesslich Art und Umfang, primär verbal während der Konsultationen vorgenommen. Diese verbale Kommunikation konzentriert sich darauf, die Versiche- rungsnehmer über die grundlegenden Aspekte der Kompensationsmoda- litäten zu informieren. Dabei werden die Art und der Umfang der Kom- pensationen erläutert, soweit sie vorab bestimmbar sind. In Fällen, in de- nen die genaue Höhe der Kompensationen im Voraus nicht feststellbar ist, wird den Versicherungsnehmern mitgeteilt, dass detaillierte Informa- tionen, einschliesslich der Berechnungsparameter und möglicher Band- breiten, auf Anfrage zur Verfügung gestellt werden können. Diese fle- xible Herangehensweise erlaubt es, den Versicherungsnehmern einen umfassenden Einblick in die Kompensationsstrukturen zu bieten und gleichzeitig spezifische Anfragen individuell zu beantworten. Zur wei- teren Absicherung und Dokumentation wird die verbale Kommunikation über die Kompensationsstrukturen, einschliesslich der Informationen zu Art und Umfang, im Anschluss an die Beratungsgespräche schriftlich in einem Beratungsprotokoll festgehalten. In diesem Protokoll wird ver- merkt, dass eine entsprechende Aufklärung stattgefunden hat, und der Versicherungsnehmer bestätigt dies durch seine Unterschrift. Diese Pra- xis dient der Sicherstellung der Transparenz sowie der Nachvollziehbar- keit der Kommunikation und gewährleistet die Einhaltung der gesetzli- chen Vorgaben.
+
+                </p>
+                
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                    Für weitere Auskünfte oder Fragen können Sie sich an folgende E-Mail wenden:<br/><a href="mailto:backoffice@mia-vita.ch">backoffice@mia-vita.ch</a>
                 </p>
 
-                <h3 style="font-size: 14px; margin-bottom: 8px;">Kontakt</h3>
+                <!-- Signature Section (moved to right column) -->
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Vermittler</h3>
                 <p style="font-size: 12px; margin-bottom: 10px;">
-                    Für weitere Auskünfte oder Fragen: <br/>
-                    <a href="mailto:backoffice@mia-vita.ch">backoffice@mia-vita.ch</a>
+                    Name, Vorname: {!lead.FirstName} {!lead.LastName} <br/>
+                    Zertifizierung:  <br/>
                 </p>
+
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Unterschrift Vermittler</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                    Ort und Datum: {!lead.City}, {!lead.Date_of_Birth__c} <br/>
+                    Unterschrift:  <br/>
+                </p>
+
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Versicherungsnehmer</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                    Name, Vorname: {!lead.FirstName} {!lead.LastName} <br/>
+                    Strasse: {!lead.Street} <br/>
+                    PLZ, Ort: {!lead.PostalCode}, {!lead.City} <br/>
+                    Geburtsdatum: {!lead.Date_of_Birth__c}
+                </p>
+
+                <h3 style="font-size: 14px; margin-bottom: 8px;">Unterschrift Versicherungsnehmer</h3>
+                <p style="font-size: 12px; margin-bottom: 10px;">
+                    Ort und Datum: {!lead.City}, {!lead.Date_of_Birth__c} <br/>
+                    Unterschrift:
+                </p>
+         
             </td>
         </tr>
     </table>
-
-    <!-- Signature Section -->
-    <div style="margin-top: 40px;">
-        <h2 style="font-size: 14px; margin-bottom: 8px;">Unterschriften</h2>
-
-        <label style="font-weight: bold;" for="vermittler-name">Vermittler Name</label>
-        <input type="text" id="vermittler-name" style="width: 100%; padding: 5px; font-size: 12px;" placeholder="Vermittler Name"/>
-
-        <label style="font-weight: bold;" for="zertifizierung">Zertifizierung</label>
-        <input type="text" id="zertifizierung" style="width: 100%; padding: 5px; font-size: 12px;" placeholder="Zertifizierung"/>
-
-        <label style="font-weight: bold;" for="versicherungsnehmer-name">Versicherungsnehmer Name</label>
-        <input type="text" id="versicherungsnehmer-name" style="width: 100%; padding: 5px; font-size: 12px;" placeholder="Versicherungsnehmer Name"/>
-
-        <label style="font-weight: bold;" for="plz-ort">PLZ, Ort</label>
-        <input type="text" id="plz-ort" style="width: 100%; padding: 5px; font-size: 12px;" placeholder="PLZ, Ort"/>
-    </div>
 </apex:page>
