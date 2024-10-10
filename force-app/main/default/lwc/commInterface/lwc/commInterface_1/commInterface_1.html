@@ -2,10 +2,10 @@
     <lightning-card>
         <div slot="title" class="slds-text-align_center slds-text-heading_medium">
             <lightning-icon icon-name="utility:chat" alternative-text="Chat Icon" size="small" class="slds-m-right_x-small"></lightning-icon>
-            Chat Messenger
+            Notifications
         </div>
         <lightning-button label="Open" slot="actions" onclick={handleOpenModal}></lightning-button>
-        <p class="slds-text-align_center">X New Notifications</p>
+        <p class="slds-text-align_center">0 New Notifications</p>
         
         <!-- Include the modal child component -->
         <c-chat-modal is-modal-open={isModalOpen} onclose={handleCloseModal}></c-chat-modal>

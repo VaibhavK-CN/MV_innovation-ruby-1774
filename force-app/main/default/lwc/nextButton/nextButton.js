@@ -1,86 +1,49 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
-import getCurrentUserLeadList from '@salesforce/apex/LeadControllerNextLead.getCurrentUserLeadList';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getNextLead from '@salesforce/apex/LeadControllerNextLead.getNextLead';
 
-export default class NextLead extends NavigationMixin(LightningElement) {
-    @api recordId;
-    @track leadList = [];
-    @track isLoading = true; // For loading state
-    nextLeadId;
+let count = 0;
 
-    // Define priority mapping
-    statusPriority = {
-        'Super Hot': 1,
-        'Warm': 2,
-        'Cold': 3
-    };
+export default class NextLeadButton extends NavigationMixin(LightningElement) {
+    @track lead;    // Store the fetched lead details
+    @track error;   // Store any error messages
 
-    connectedCallback() {
-        this.fetchLeadList();
-    }
-
-    fetchLeadList() {
-        getCurrentUserLeadList({ recordId: this.recordId })
+    // Method to handle button click
+    handleNextLead() {
+        getNextLead()
             .then(result => {
-                this.leadList = result || []; // Handle empty result
-                this.isLoading = false; // Stop loading
-                console.log('leadList::', JSON.stringify(this.leadList.length));
-                console.log('leadList::', JSON.stringify(this.leadList));
+                console.log('result:', result);
+                let data = null;
+
+                if (result != null && count < result.length) {
+                    data = result[count];
+                    count++;
+                }
+
+                if (data) {
+                    this.lead = data; // Update lead with the fetched result
+                    this.error = undefined; // Clear any previous error
+                    this.navigateToLeadRecord(this.lead.Id); // Navigate to the lead record
+                } else {
+                    this.error = 'No more leads available.'; // Set error if no more leads
+                    this.lead = undefined; // Clear the lead data
+                }
             })
             .catch(error => {
-                this.isLoading = false; // Stop loading on error
-                this.showMessage('Error fetching lead list', 'error');
-                console.error(error);
+                this.error = error.body.message; // Capture the error message
+                this.lead = undefined; // Clear the lead data
             });
     }
 
-    handleNextLeadClick() {
-        let foundCurrentLead = false;
-        let nextLeadCandidates = [];
-
-        // Iterate through the lead list to find the current lead and potential next leads
-        for (const lead of this.leadList) {
-            if (foundCurrentLead && lead.Status in this.statusPriority) {
-                nextLeadCandidates.push(lead);
+    // Method to navigate to the lead record
+    navigateToLeadRecord(leadId) {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: leadId,
+                objectApiName: 'Lead',
+                actionName: 'view'
             }
-
-            if (lead.Id === this.recordId) {
-                foundCurrentLead = true;
-            }
-        }
-
-        // Sort the candidates based on priority
-        nextLeadCandidates.sort((a, b) => {
-            const priorityA = this.statusPriority[a.Status] || Infinity;
-            const priorityB = this.statusPriority[b.Status] || Infinity;
-            return priorityA - priorityB;
         });
-
-        // Get the highest priority lead if available
-        if (nextLeadCandidates.length > 0) {
-            this.nextLeadId = nextLeadCandidates[0].Id;
-            this.showMessage('Next lead opened successfully!', 'success');
-            this[NavigationMixin.Navigate]({
-                type: 'standard__recordPage',
-                attributes: {
-                    recordId: this.nextLeadId,
-                    objectApiName: 'Lead',
-                    actionName: 'view'
-                }
-            });
-        } else {
-            this.showMessage('No next lead found with the defined status priorities.', 'error');
-        }
-    }
-
-    showMessage(message, variant) {
-        const event = new ShowToastEvent({
-            title: 'Notification',
-            variant: variant,
-            mode: 'dismissable',
-            message: message
-        });
-        this.dispatchEvent(event);
     }
 }

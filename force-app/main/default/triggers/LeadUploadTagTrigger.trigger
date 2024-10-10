@@ -1,19 +1,35 @@
 trigger LeadUploadTagTrigger on Lead (before insert, before update) {
-    // Query for Users in the Appointment Setter and System Administrator profiles
-    List<User> appointmentSetters = [SELECT Id FROM User WHERE Profile.Name = 'Appointment Setter' LIMIT 1];
-    List<User> systemAdmins = [SELECT Id FROM User WHERE Profile.Name = 'System Administrator' LIMIT 1];
+    // Query for active Users in the Appointment Setter and System Administrator profiles
+    List<User> appointmentSetters = [
+        SELECT Id FROM User 
+        WHERE Profile.Name = 'Appointment Setter' AND IsActive = true
+    ];
+    
+    List<User> systemAdmins = [
+        SELECT Id FROM User 
+        WHERE Profile.Name = 'System Administrator' AND IsActive = true 
+        LIMIT 1
+    ];
 
-    Id appointmentSetterId = appointmentSetters.isEmpty() ? null : appointmentSetters[0].Id;
     Id systemAdminId = systemAdmins.isEmpty() ? null : systemAdmins[0].Id;
+
+    // Track the index for round-robin assignment
+    Integer appointmentSetterIndex = 0;
 
     for (Lead lead : Trigger.new) {
         // Check the Upload Tag value and assign accordingly
         if (lead.Upload_Tag__c == 'New') {
             // Assign to Appointment Setter
-            if (appointmentSetterId != null) {
-                lead.OwnerId = appointmentSetterId;
+            if (!appointmentSetters.isEmpty()) {
+                lead.OwnerId = appointmentSetters[appointmentSetterIndex].Id;
+
+                // Update the index for next assignment (wrap around if needed)
+                appointmentSetterIndex++;
+                if (appointmentSetterIndex >= appointmentSetters.size()) {
+                    appointmentSetterIndex = 0; // Reset to the first Appointment Setter
+                }
             } else {
-                // Handle case where no Appointment Setter is found
+                // Handle case where no active Appointment Setter is found
                 // (Optional: log a message or set a default owner)
             }
         } else {
@@ -21,7 +37,7 @@ trigger LeadUploadTagTrigger on Lead (before insert, before update) {
             if (systemAdminId != null) {
                 lead.OwnerId = systemAdminId;
             } else {
-                // Handle case where no System Admin is found
+                // Handle case where no active System Admin is found
                 // (Optional: log a message or set a default owner)
             }
         }

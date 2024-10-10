@@ -1,7 +1,15 @@
 <template>
-    <section class="main-container">
-        <div class="slds-p-around_medium">
-            <lightning-button variant="brand" label="Next Lead" title="Next lead" onclick={handleNextLeadClick} class="slds-align_absolute-center"></lightning-button>
+    <lightning-card title="Next Lead" icon-name="standard:lead">
+        <div class="slds-m-around_medium">
+            <lightning-button label="Next Lead Button" onclick={handleNextLead}></lightning-button>
+            <template if:true={lead}>
+                <p><strong>Lead Name:</strong> {lead.Name}</p>
+                <p><strong>Priority:</strong> {lead.Priority__c}</p>
+                <p><strong>Created Date:</strong> {lead.CreatedDate}</p>
+            </template>
+            <template if:true={error}>
+                <p class="slds-text-color_error">{error}</p>
+            </template>
         </div>
-    </section>
+    </lightning-card>
 </template>

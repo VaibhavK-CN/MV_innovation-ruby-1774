@@ -19,7 +19,7 @@ public class SignWellApi {
             // For Article 45 Template, we need FirstName 
             templateFields.add(new Map<String, String>{'api_id' => 'PH_FName', 'value' => l.FirstName});
            // templateFields.add(new Map<String, String>{'api_id' => 'PH_LName', 'value' => l.LastName});
-        } else if (parameter == 'template_id_2') {
+        } /* else if (parameter == 'template_id_2') {
             // For Template 2, we need Date of Birth
             templateFields.add(new Map<String, String>{'api_id' => 'PH_DOB', 'value' => l.Date_of_Birth__c != null ? l.Date_of_Birth__c.format() : ''});
         } else if (parameter == 'template_id_3') {
@@ -29,11 +29,11 @@ public class SignWellApi {
         } else {
             // Default template fields if no specific template matches
             templateFields.add(new Map<String, String>{'api_id' => 'PH_DefaultField', 'value' => 'Default Value'});
-        }
+        } */
 
         // Construct the request body
         Map<String, String> parameters = new Map<String, String>();
-        String requestBody = '{"test_mode":false,"draft":false,"with_signature_page":false,"reminders":true,"apply_signing_order":false,"embedded_signing":false,"embedded_signing_notifications":false,"text_tags":false,"allow_decline":true,"allow_reassign":true,"template_id":"' 
+        String requestBody = '{"test_mode":true,"draft":false,"with_signature_page":false,"reminders":true,"apply_signing_order":false,"embedded_signing":false,"embedded_signing_notifications":false,"text_tags":false,"allow_decline":true,"allow_reassign":true,"template_id":"' 
                     + parameter 
                     + '","template_fields":' 
                     + JSON.serialize(templateFields) 

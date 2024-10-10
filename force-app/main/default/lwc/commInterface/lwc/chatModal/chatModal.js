@@ -1,21 +1,33 @@
 import { LightningElement, api, track } from 'lwc';
 
 export default class ChatModal extends LightningElement {
-    // @api property to receive modal state from parent
     @api isModalOpen;
+    @track isChildModalOpen = false; // Track if the child modal is open
 
     // Array of tabs for the tabset
     @track tabs = [
-        { label: 'Article 45', value: 'Article45', content: 'This is the Article 45 Related notifications.' },
+        { label: 'Article 45', value: 'Article45', content: 'You have got 0 new notifications' },
         { label: 'SMS', value: 'sms', content: 'This is SMS content.' },
-        { label: 'Email', value: 'email', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lorem libero, scelerisque sed urna eu, sodales commodo magna. Vestibulum eget enim at velit interdum consequat. Nullam consectetur tortor eu sapien lobortis, congue pulvinar risus dapibus. Pellentesque massa dolor, varius dignissim aliquet vel, placerat id elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec gravida malesuada erat sed rutrum. Suspendisse potenti. Donec ornare nulla metus, eu accumsan nisi ultrices vel. Pellentesque vitae orci leo. Nam sed quam neque. Praesent dictum laoreet ipsum, eu blandit nibh cursus in. Ut enim orci, semper quis nulla in, laoreet imperdiet libero.' },
+        { label: 'Email', value: 'Lorem ipsum dolor sit amet...' },
         { label: 'WhatsApp', value: 'whatsapp', content: 'This is WhatsApp content.' },
     ];
 
-    // Method to close the modal
+    // Method to close the parent modal
     closeModal() {
-        // Dispatch an event to inform the parent component to close the modal
+        this.isModalOpen = false; // Close the parent modal when the close button is clicked
         const closeEvent = new CustomEvent('close');
         this.dispatchEvent(closeEvent);
+    }
+
+    // Method to open the child modal and close the parent modal
+    openChildModal() {
+        this.isChildModalOpen = true;  // Open the child modal
+        this.isModalOpen = false;      // Close the parent modal
+    }
+
+    // Method to close the child modal and reopen the parent modal
+    closeChildModal() {
+        this.isChildModalOpen = false; // Close the child modal
+        this.isModalOpen = true;       // Reopen the parent modal
     }
 }

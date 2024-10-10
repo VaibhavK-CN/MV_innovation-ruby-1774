@@ -1,3 +1,69 @@
 <template>
-    
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium">Child Modal</h2>
+                </header>
+                <!--Chat Modal Content-->
+                <div class="slds-modal__content slds-p-around_medium">
+                    <ul class="slds-list_vertical slds-has-dividers_top-space">
+                        <li class="slds-item">
+                            <strong>SR-00093</strong>
+                            <div>
+                                <span>Document Name: </span><strong>2024_VAG 45 miavita EN</strong>
+                            </div>
+                            <div>
+                                <span>Lead Name: </span><strong>Vaibhav Kumar</strong>
+                            </div>
+                            <div>
+                                <span>Signwell Document Link: </span>
+                                <a href="https://www.signwell.com/docs/eec5fe0e99/" target="_blank">https://www.signwell.com/docs/eec5fe0e99/</a>
+                            </div>
+                            <div>
+                                <span>Salesforce PDF Link: </span>
+                                <a href="https://www.salesforce.com/docs/PDF/eec5fe0e99/" target="_blank">https://www.signwell.com/docs/eec5fe0e99/</a>
+                            </div>
+                            <div>
+                                <span>Status: </span><strong>Viewed</strong>
+                            </div>
+                        </li>
+                        <li class="slds-item">
+                            <strong>SR-00092</strong>
+                            <div>
+                                <span>Document Name: </span><strong>2024_VAG 45 miavita EN</strong>
+                            </div>
+                            <div>
+                                <span>Lead Name: </span><strong>Vaibhav Kumar</strong>
+                            </div>
+                            <div>
+                                <span>Signwell Document Link: </span>
+                                <a href="https://www.signwell.com/docs/44e825380b/" target="_blank">https://www.signwell.com/docs/44e825380b/</a>
+                            </div>
+                            <div>
+                                <span>Salesforce PDF Link: </span>
+                                <a href="https://www.salesforce.com/docs/PDF/eec5fe0e99/" target="_blank">https://www.signwell.com/docs/eec5fe0e99/</a>
+                            </div>
+                            <div>
+                                <span>Status: </span><strong>Completed</strong>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+
+                <footer class="slds-modal__footer">
+                    <!-- Close button -->
+                    <lightning-button label="Close" class="slds-float_right" onclick={closeModal}></lightning-button>
+                </footer>
+            </div>
+        </section>
+
+        <!-- Backdrop for Modal -->
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
 </template>
