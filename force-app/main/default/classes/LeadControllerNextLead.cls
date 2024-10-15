@@ -12,7 +12,7 @@ public with sharing class LeadControllerNextLead {
                 FROM Lead
                 WHERE Priority__c > :lastPriority
                 ORDER BY Priority__c ASC, CreatedDate ASC
-                LIMIT 100 // Add a limit to avoid fetching too many records at once
+                LIMIT 2000 // Add a limit to avoid fetching too many records at once
             ];
             leadIndex = 0; // Reset the index for the new set of leads
         }
