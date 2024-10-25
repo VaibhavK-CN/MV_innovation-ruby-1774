@@ -42,7 +42,9 @@ global with sharing class WebhookHandler {
             
                 if (webhookData.containsKey('payload')) {
                     Map<String, Object> payloadData = (Map<String, Object>) webhookData.get('payload');
+                    System.debug('Webflow Payload Data: ' + payloadData);
                     Map<String, Object> formData = (Map<String, Object>) payloadData.get('data');
+                    System.debug('Webflow formData Data: ' + formData);
             
                     // Check for required fields and assign them to variables
                     String dialCode = (String) formData.get('Dial code');
@@ -69,45 +71,44 @@ global with sharing class WebhookHandler {
 
 
     // Method to handle SignWell payload
-    private static void handleSignWellPayload(Map<String, Object> webhookData) {
-        System.debug('Processing SignWell payload...');
+    // Method to handle SignWell payload
+private static void handleSignWellPayload(Map<String, Object> webhookData) {
+    System.debug('Processing SignWell payload...');
 
-        // Extract the document ID and status from the payload
-        Map<String, Object> documentData = (Map<String, Object>) ((Map<String, Object>) webhookData.get('data')).get('object');
-        String documentId = (String) documentData.get('id');
-        String documentStatus = (String) documentData.get('status'); // E.g., "Sent", "Completed", etc.
+    // Extract the document ID and status from the payload
+    Map<String, Object> documentData = (Map<String, Object>) ((Map<String, Object>) webhookData.get('data')).get('object');
+    String documentId = (String) documentData.get('id');
+    String documentStatus = (String) documentData.get('status'); // E.g., "Sent", "Completed", etc.
 
-        System.debug('SignWell Document ID: ' + documentId);
-        System.debug('SignWell Document Status: ' + documentStatus);
-        
-        // Extract and debug the "fields" from the payload
+    System.debug('SignWell Document ID: ' + documentId);
+    System.debug('SignWell Document Status: ' + documentStatus);
+    
+    // Extract the "fields" from the payload
+    List<Map<String, String>> fieldsData = new List<Map<String, String>>();
     if (documentData.containsKey('fields')) {
         List<Object> fields = (List<Object>) documentData.get('fields');
         
         for (Object fieldGroup : fields) {
             List<Object> fieldList = (List<Object>) fieldGroup;
-            
             for (Object fieldObj : fieldList) {
                 Map<String, Object> field = (Map<String, Object>) fieldObj;
                 
-                // Debug each field's properties
-                System.debug('Field API ID: ' + field.get('api_id'));
-                System.debug('Field Page: ' + field.get('page'));
-                System.debug('Field Required: ' + field.get('required'));
-                System.debug('Field Type: ' + field.get('type'));
-                System.debug('Field Value: ' + field.get('value'));
-                System.debug('Field Width: ' + field.get('width'));
-                System.debug('Field Height: ' + field.get('height'));
-                System.debug('Field X Position: ' + field.get('x'));
-                System.debug('Field Y Position: ' + field.get('y'));
-                System.debug('Field Recipient ID: ' + field.get('recipient_id'));
+                // Store each field's API ID and value
+                String apiId = (String) field.get('api_id');
+                String value = (String) field.get('value');
+                
+                // Add the API ID and value as a map to the list
+                fieldsData.add(new Map<String, String>{'api_id' => apiId, 'value' => value});
+                
+                System.debug('Field API ID: ' + apiId + ', Field Value: ' + value);
             }
         }
     } else {
         System.debug('No fields found in the SignWell payload.');
     }
 
-        // Enqueue the first Queueable job to update the document status (as needed)
-        System.enqueueJob(new SignWellUpdateStatusJob(documentId, documentStatus));
-    }
+    // Enqueue the Queueable job to update the document status and lead fields
+    System.enqueueJob(new SignWellUpdateStatusJob(documentId, documentStatus, fieldsData));
+}
+
 }

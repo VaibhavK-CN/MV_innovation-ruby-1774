@@ -1,7 +1,7 @@
 global class LeadScoreBatch implements Database.Batchable<SObject>, Database.Stateful {
     private Integer currentRank; // Store the current rank starting from 1
 
-    // Constructor is no longer needed
+    // Constructor
     public LeadScoreBatch() {
         this.currentRank = 0; // Start rank from 0 (will increment)
     }
@@ -9,7 +9,7 @@ global class LeadScoreBatch implements Database.Batchable<SObject>, Database.Sta
     // Start method: Return all leads to be processed
     global Database.QueryLocator start(Database.BatchableContext bc) {
         System.debug('Starting the batch process for lead ranking.');
-        return Database.getQueryLocator([SELECT Id, Status, CreatedDate, Lead_Number__c FROM Lead]);
+        return Database.getQueryLocator([SELECT Id, Lead_Temperature__c, CreatedDate, Lead_Number__c FROM Lead]);
     }
 
     // Execute method: Process each batch of leads
@@ -21,7 +21,7 @@ global class LeadScoreBatch implements Database.Batchable<SObject>, Database.Sta
 
         System.debug('Leads before sorting: ' + scope);
 
-        // Sort leads based on status, created date, and lead number
+        // Sort leads based on Lead_Temperature__c, created date, and lead number
         scope.sort(new LeadComparator());
 
         System.debug('Leads after sorting: ' + scope);
@@ -30,6 +30,8 @@ global class LeadScoreBatch implements Database.Batchable<SObject>, Database.Sta
         for (Lead lead : scope) {
             currentRank++; // Increment rank for each lead
             lead.Lead_Score__c = currentRank; // Assign the rank
+            
+          
             System.debug('Lead: ' + lead.Id + ' | New Rank: ' + currentRank);
             leadsToUpdate.add(lead);
         }
@@ -50,16 +52,16 @@ global class LeadScoreBatch implements Database.Batchable<SObject>, Database.Sta
     // Custom comparator class to handle the sorting based on the criteria
     global class LeadComparator implements Comparator<Lead> {
         public Integer compare(Lead lead1, Lead lead2) {
-            // 1. Compare by Status (Super Hot > Hot > Warm > Cold)
-            Integer statusRank1 = mapStatusToRank(lead1.Status);
-            Integer statusRank2 = mapStatusToRank(lead2.Status);
+            // 1. Compare by Lead_Temperature__c (Super Hot > Hot > Warm > Cold)
+            Integer tempRank1 = mapTemperatureToRank(lead1.Lead_Temperature__c);
+            Integer tempRank2 = mapTemperatureToRank(lead2.Lead_Temperature__c);
             
-            // Debug: Comparing statuses
-            System.debug('Comparing Status | Lead1: ' + lead1.Id + ' (Status: ' + lead1.Status + ') vs Lead2: ' + lead2.Id + ' (Status: ' + lead2.Status + ')');
+            // Debug: Comparing temperatures
+            System.debug('Comparing Lead_Temperature__c | Lead1: ' + lead1.Id + ' (Lead_Temperature__c: ' + lead1.Lead_Temperature__c + ') vs Lead2: ' + lead2.Id + ' (Lead_Temperature__c: ' + lead2.Lead_Temperature__c + ')');
             
-            if (statusRank1 != statusRank2) {
-                System.debug('Status ranks are different. StatusRank1: ' + statusRank1 + ' vs StatusRank2: ' + statusRank2);
-                return statusRank1 - statusRank2; // Compare by status
+            if (tempRank1 != tempRank2) {
+                System.debug('Lead_Temperature__c ranks are different. TempRank1: ' + tempRank1 + ' vs TempRank2: ' + tempRank2);
+                return tempRank1 - tempRank2; // Compare by temperature rank
             }
 
             // 2. Compare by Created Date (earlier is better)
@@ -95,12 +97,12 @@ global class LeadScoreBatch implements Database.Batchable<SObject>, Database.Sta
             return 0;
         }
 
-        // Helper method to map Status to a rank
-        private Integer mapStatusToRank(String status) {
-            if (status == null) return 5; // Null status is considered lowest rank
-            if (status == 'Super Hot') return 1;
-            if (status == 'Hot') return 2;
-            if (status == 'Warm') return 3;
+        // Helper method to map Lead_Temperature__c to a rank
+        private Integer mapTemperatureToRank(String temperature) {
+            if (temperature == null) return 5; // Null temperature is considered lowest rank
+            if (temperature == 'Super Hot') return 1;
+            if (temperature == 'Hot') return 2;
+            if (temperature == 'Warm') return 3;
             return 4; // Cold is the lowest rank
         }
     }
