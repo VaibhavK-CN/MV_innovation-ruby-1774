@@ -1,0 +1,19 @@
+<!-- greenzone.html -->
+<template>
+    <lightning-card title="Green Zone: Available Appointments" icon-name="standard:appointment">
+        <lightning-datatable
+            key-field="id"
+            data={pagedAppointments}
+            columns={columns}
+            hide-checkbox-column="true"
+            onrowaction={handleRowAction}>
+        </lightning-datatable>
+
+        <div class="slds-p-around_small">
+            <lightning-button-group>
+                <lightning-button label="Previous" onclick={previousPage} disabled={isFirstPage}></lightning-button>
+                <lightning-button label="Next" onclick={nextPage} disabled={isLastPage}></lightning-button>
+            </lightning-button-group>
+        </div>
+    </lightning-card>
+</template>

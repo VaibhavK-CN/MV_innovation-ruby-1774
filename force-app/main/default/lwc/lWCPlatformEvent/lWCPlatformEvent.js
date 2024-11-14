@@ -24,6 +24,7 @@ export default class LWCPlatformEvent extends LightningElement {
             console.log('New message received 2: ', response);
             var obj = JSON.parse(JSON.stringify(response));
             console.log(obj.data.payload);
+            console.log('Testing');
             console.log(obj.data.payload.Message__c);
             console.log(self.channelName);
             let objData = obj.data.payload;

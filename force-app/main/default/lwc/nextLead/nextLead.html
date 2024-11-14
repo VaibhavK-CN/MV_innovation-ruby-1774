@@ -1,7 +1,8 @@
 <template>
-    <section class="main-container">
-        <div class="slds-p-around_medium">
-            <lightning-button variant="brand" label="Next Lead" title="Next lead" onclick={handleNextLeadClick} class="slds-align_absolute-center"></lightning-button>
+    <template if:true={isLoading}>
+        <div class="slds-align_absolute-center slds-p-around_medium">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            <p class="slds-text-title_bold">{loadingMessage}</p>
         </div>
-    </section>
+    </template>
 </template>

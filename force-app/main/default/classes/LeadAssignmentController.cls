@@ -6,9 +6,9 @@ public class LeadAssignmentController {
     public String selectedProfileId { get; set; } // Stores selected Profile ID
     public Id selectedUserId { get; set; } // Stores selected User ID
 
-    public List<SelectOption> getProfileOptions() {
+   public List<SelectOption> getProfileOptions() {
         List<SelectOption> options = new List<SelectOption>();
-        List<Profile> profiles = [SELECT Id, Name FROM Profile WHERE Name IN ('Call Agent', 'Advisor')];
+        List<Profile> profiles = [SELECT Id, Name FROM Profile WHERE Name IN ('Call ', 'Advi')];
 
         for (Profile profile : profiles) {
             options.add(new SelectOption(profile.Id, profile.Name));
@@ -40,5 +40,5 @@ public class LeadAssignmentController {
         PageReference leadDetailPage = new PageReference('/' + lead.Id);
         leadDetailPage.setRedirect(true);
         return leadDetailPage; 
-    }
+    } 
 }

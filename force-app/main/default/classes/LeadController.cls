@@ -1,7 +1,7 @@
 public class LeadController {
     /***Lead****/
     // Create a new Application Family Member records           
-    @AuraEnabled
+   /* @AuraEnabled
     public static List<ApplicationFamilyMember__c> saveFamilyMember(Id leadId, String payload) {
         List<ApplicationFamilyMember__c> familyMembers = new List<ApplicationFamilyMember__c>();
         List<ApplicationFamilyMember__c> listNeedToBeInsert = new List<ApplicationFamilyMember__c>();
@@ -73,7 +73,7 @@ public class LeadController {
     }
     /***Life Insurance****/
     // Create a new Application Family Member records 
-    @AuraEnabled
+  /*  @AuraEnabled
     public static List<ApplicationFamilyMember__c> saveFamilyMemberForLifeInsurance(Id recordId, String payload) {
         List<ApplicationFamilyMember__c> familyMembers = new List<ApplicationFamilyMember__c>();
         system.debug(recordId);
@@ -151,7 +151,7 @@ public class LeadController {
     
     /****Consultant Response****/
     // Update consultant request after consultant response received
-    @AuraEnabled
+  /*  @AuraEnabled
     public static void consultantResponse(String leadId, String response) {
         system.debug('leadId: '+leadId);
         system.debug('response: '+response);
@@ -208,5 +208,5 @@ public class LeadController {
         public String relationship;
         public String email;
         public Date dob;
-    }
+    } */
 }

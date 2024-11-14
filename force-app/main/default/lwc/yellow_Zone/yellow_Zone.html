@@ -1,0 +1,13 @@
+<template>
+    <h2>Yellow Zone: Selected Appointments</h2>
+    <template if:true={selectedAppointments}>
+        <template for:each={selectedAppointments} for:item="appointment">
+            <div key={appointment} class="slds-box slds-m-around_small">
+                <p>Selected Appointment ID: {appointment}</p>
+            </div>
+        </template>
+    </template>
+    <template if:false={selectedAppointments}>
+        <p>No appointments selected.</p>
+    </template>
+</template>

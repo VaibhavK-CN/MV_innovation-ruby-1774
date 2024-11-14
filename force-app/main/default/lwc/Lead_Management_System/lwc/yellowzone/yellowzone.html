@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title="Yellow Zone: Selected Appointments" icon-name="standard:lead">
+        <lightning-datatable
+            key-field="id"
+            data={selectedAppointments}
+            columns={columns}
+            hide-checkbox-column="true">
+        </lightning-datatable>
+        
+        <template if:true={selectedAppointments}>
+            <div class="slds-p-around_small">
+                <p>You have selected {selectedAppointments.length} appointments.</p>
+            </div>
+        </template>
+        <template if:false={selectedAppointments}>
+            <p class="slds-p-around_small">No appointments selected.</p>
+        </template>
+    </lightning-card>
+</template>
