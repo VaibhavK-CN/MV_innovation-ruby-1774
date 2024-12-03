@@ -1,0 +1,66 @@
+<template>
+    <div class="slds-grid slds-grid_vertical slds-grid_align-center slds-m-top_large slds-p-around_medium slds-box slds-theme_default">
+        <!-- Title Section -->
+        <div class="slds-size_12-of-12 slds-text-align_center">
+            <h1 class="slds-text-heading_large slds-text-color_brand">Work Day Management</h1>
+        </div>
+
+        <!-- User Information Section -->
+        <template if:true={user}>
+            <div class="slds-m-top_large slds-text-align_center">
+                <p class="slds-text-body_regular">Welcome, <strong>{user.Name}</strong></p>
+                <p class="slds-text-heading_small">Status: <strong>{user.Availability_Status__c}</strong></p>
+            </div>
+
+            <!-- Buttons Section -->
+            <div class="slds-grid slds-grid_align-center slds-m-top_large">
+                <!-- Work Day Start Button -->
+                <div class="slds-m-horizontal_small">
+                    <lightning-button
+                        variant="brand"
+                        label="Work Day Start"
+                        onclick={handleWorkDayStart}
+                        disabled={isWorkDayStarted}
+                        class="slds-button_stretch"
+                    ></lightning-button>
+                </div>
+
+                <!-- Break Button -->
+                <div class="slds-m-horizontal_small">
+                    <lightning-button
+                        variant="neutral"
+                        label="Break"
+                        onclick={handleBreak}
+                        disabled={isOnBreak}
+                        class="slds-button_stretch"
+                    ></lightning-button>
+                </div>
+
+                <!-- Work Day End Button -->
+                <div class="slds-m-horizontal_small">
+                    <lightning-button
+                        variant="destructive"
+                        label="Work Day End"
+                        onclick={handleWorkDayEnd}
+                        disabled={isWorkDayEnded}
+                        class="slds-button_stretch"
+                    ></lightning-button>
+                </div>
+            </div>
+        </template>
+
+        <!-- Loading Section -->
+        <template if:false={user}>
+            <div class="slds-m-top_large slds-text-align_center">
+                <p class="slds-text-heading_medium slds-text-color_error">Loading user information...</p>
+            </div>
+        </template>
+
+        <!-- Spinner Section -->
+        <template if:true={isLoading}>
+            <div class="slds-align_absolute-center slds-m-top_large">
+                <lightning-spinner alternative-text="Processing..."></lightning-spinner>
+            </div>
+        </template>
+    </div>
+</template>

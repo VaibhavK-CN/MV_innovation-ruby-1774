@@ -1,112 +1,159 @@
 public class LeadAssignmentHelper {
 
-    // Static variable for Call Agent Queue ID
-    public static Id callAgentQueueId = getCallAgentQueueId();
+    public static Id callAgentQueueId = getQueueId('Call Agent Queue');
+    public static Id consultantQueueId = getQueueId('Consultant Health Inc');
 
-    // Method to fetch Call Agent Queue ID
-    private static Id getCallAgentQueueId() {
+    // Fetch Queue ID by name
+    private static Id getQueueId(String queueName) {
         try {
-            Group callAgentQueue = [SELECT Id FROM Group WHERE Type = 'Queue' AND Name = 'Call Agent Queue' LIMIT 1];
-            System.debug('Fetched Call Agent Queue ID: ' + (callAgentQueue != null ? callAgentQueue.Id : 'null'));
-            return callAgentQueue != null ? callAgentQueue.Id : null;
+            System.debug('Fetching Queue ID for: ' + queueName);
+            Group queue = [SELECT Id FROM Group WHERE Type = 'Queue' AND Name = :queueName LIMIT 1];
+            System.debug('Fetched Queue ID: ' + (queue != null ? queue.Id : 'null') + ' for Queue: ' + queueName);
+            return queue != null ? queue.Id : null;
         } catch (Exception e) {
-            System.debug('Error fetching Call Agent Queue ID: ' + e.getMessage());
+            System.debug('Error fetching Queue ID for ' + queueName + ': ' + e.getMessage());
             return null;
         }
     }
 
-    // Method to update the current lead's OwnerId to Call Agent Queue
-    public static void updateLeadOwnerToQueue(Id leadId) {
-        try {
-            Lead leadToUpdate = [SELECT Id, OwnerId FROM Lead WHERE Id = :leadId LIMIT 1];
+    // Asynchronously assign newly created leads to Call Agent Queue
+    @future
+    public static void assignNewLeadsToQueueAsync(List<Id> leadIds) {
+        System.debug('Assigning new leads to Call Agent Queue. Lead IDs: ' + leadIds);
+        if (callAgentQueueId == null) {
+            System.debug('Call Agent Queue ID is null. Exiting assignment.');
+            return;
+        }
 
-            if (leadToUpdate != null) {
-                leadToUpdate.OwnerId = callAgentQueueId;
-                update leadToUpdate;
-                System.debug('Existing lead Owner updated to Call Agent Queue. Lead ID: ' + leadToUpdate.Id);
-            } else {
-                System.debug('Lead not found with ID: ' + leadId);
+        List<Lead> leadsToUpdate = [SELECT Id, OwnerId FROM Lead WHERE Id IN :leadIds];
+        System.debug('Leads fetched for Call Agent Queue assignment: ' + leadsToUpdate);
+
+        for (Lead lead : leadsToUpdate) {
+            lead.OwnerId = callAgentQueueId;
+            System.debug('Setting OwnerId to Call Agent Queue for Lead: ' + lead.Id);
+        }
+
+        if (!leadsToUpdate.isEmpty()) {
+            try {
+                update leadsToUpdate;
+                System.debug('Successfully updated leads to Call Agent Queue: ' + leadsToUpdate);
+            } catch (Exception e) {
+                System.debug('Error assigning leads to Call Agent Queue: ' + e.getMessage());
             }
-        } catch (Exception e) {
-            System.debug('Error updating lead Owner to Call Agent Queue: ' + e.getMessage());
         }
     }
 
-    // Find a new lead based on preferred language and least lead score, excluding the current lead
-    public static Lead findNewLeadWithCriteria(String preferredLanguage, Id currentLeadId) {
-        System.debug('Finding new lead with criteria. Preferred Language: ' + preferredLanguage);
-
-        if (String.isBlank(preferredLanguage)) {
-            System.debug('Preferred language is blank. Returning null.');
-            return null;
+    // Asynchronously assign leads to Consultant_Health_Inc queue
+    @future
+    public static void assignLeadsToConsultantQueueAsync(List<Id> leadIds) {
+        System.debug('Assigning leads to Consultant_Health_Inc Queue. Lead IDs: ' + leadIds);
+        if (consultantQueueId == null) {
+            System.debug('Consultant_Health_Inc Queue ID is null. Exiting assignment.');
+            return;
         }
 
-        // Query to find a new lead with matching language, least lead score, and excluding the current lead
-        List<Lead> availableLeads = [
-            SELECT Id, OwnerId, Lead_Score__c 
-            FROM Lead 
-            WHERE Langauge_Prefered__c = :preferredLanguage
-              AND OwnerId = :callAgentQueueId
-              AND Id != :currentLeadId
-            ORDER BY Lead_Score__c ASC
-            LIMIT 1
-        ];
+        List<Lead> leadsToUpdate = [SELECT Id, OwnerId FROM Lead WHERE Id IN :leadIds];
+        System.debug('Leads fetched for Consultant_Health_Inc Queue assignment: ' + leadsToUpdate);
 
-        System.debug('Available leads found: ' + availableLeads.size());
-
-        // Return the first available lead that meets the criteria
-        if (!availableLeads.isEmpty()) {
-            Lead newLead = availableLeads[0];
-            System.debug('New lead found for assignment. Lead ID: ' + newLead.Id + ', Lead Score: ' + newLead.Lead_Score__c);
-            return newLead;
-        } else {
-            System.debug('No matching new lead found for preferred language: ' + preferredLanguage);
+        for (Lead lead : leadsToUpdate) {
+            lead.OwnerId = consultantQueueId;
+            System.debug('Setting OwnerId to Consultant_Health_Inc Queue for Lead: ' + lead.Id);
         }
 
-        return null;
+        if (!leadsToUpdate.isEmpty()) {
+            try {
+                update leadsToUpdate;
+                System.debug('Successfully updated leads to Consultant_Health_Inc Queue: ' + leadsToUpdate);
+            } catch (Exception e) {
+                System.debug('Error assigning leads to Consultant_Health_Inc Queue: ' + e.getMessage());
+            }
+        }
     }
 
-    // Assign a new lead to the current user
-    public static void assignNewLeadToUser(String preferredLanguage, Id userId, Id currentLeadId) {
-        System.debug('Assigning new lead to user. User ID: ' + userId + ', Preferred Language: ' + preferredLanguage);
-
-        Lead newLead = findNewLeadWithCriteria(preferredLanguage, currentLeadId);
+    // Assign a new lead to the current user based on feedback
+    @future
+    public static void assignNewLeadToUser(String preferredLanguage, Id userId, Id leadId) {
+        System.debug('Assigning a new lead based on feedback. Preferred Language: ' + preferredLanguage + ', User ID: ' + userId + ', Lead ID: ' + leadId);
+        Lead newLead = findNewLeadWithCriteria(preferredLanguage, leadId);
+        System.debug('New lead found for assignment: ' + (newLead != null ? newLead.Id : 'null'));
 
         if (newLead != null) {
             try {
                 newLead.OwnerId = userId;
                 update newLead;
-                System.debug('New lead assigned to user: ' + userId + ', Lead ID: ' + newLead.Id);
+                System.debug('Successfully assigned new lead to user. Lead ID: ' + newLead.Id + ', User ID: ' + userId);
             } catch (Exception e) {
-                System.debug('Error assigning new lead to user: ' + userId + ', Error: ' + e.getMessage());
+                System.debug('Error assigning new lead to user: ' + e.getMessage());
             }
-        } else {
-            System.debug('No new lead available for assignment to user: ' + userId);
         }
     }
 
-    // New method to find the next assigned lead for the current user
-    @AuraEnabled
-    public static String findNextAssignedLead(Id currentLeadId) {
-        System.debug('Finding next assigned lead for user: ' + UserInfo.getUserId());
+    // Find a new lead based on preferred language and least lead score
+    public static Lead findNewLeadWithCriteria(String preferredLanguage, Id currentLeadId) {
+        System.debug('Finding new lead based on criteria. Preferred Language: ' + preferredLanguage + ', Excluding Lead ID: ' + currentLeadId);
 
-        // Get the current user ID
-        Id currentUserId = UserInfo.getUserId();
-
-        // Query to find the next assigned lead for the user, excluding the current lead
-        List<Lead> nextLeads = [SELECT Id 
-                                FROM Lead 
-                                WHERE OwnerId = :currentUserId 
-                                  AND Id != :currentLeadId
-                                ORDER BY CreatedDate ASC 
-                                LIMIT 1];
-
-        if (!nextLeads.isEmpty()) {
-            System.debug('Next assigned lead found. Lead ID: ' + nextLeads[0].Id);
-            return nextLeads[0].Id;
-        } else {
-            System.debug('No next lead found for user.');
+        if (String.isBlank(preferredLanguage)) {
+            System.debug('Preferred Language is blank. Returning null.');
             return null;
         }
+
+        List<Lead> leads = [
+            SELECT Id, Lead_Score__c 
+            FROM Lead 
+            WHERE Langauge_Prefered__c = :preferredLanguage 
+              AND OwnerId = :callAgentQueueId 
+              AND Id != :currentLeadId
+            ORDER BY Lead_Score__c ASC 
+            LIMIT 1
+        ];
+
+        System.debug('Leads found matching criteria: ' + leads);
+        return leads.isEmpty() ? null : leads[0];
+    }
+
+    // Update a single lead owner to the Call Agent Queue asynchronously
+    @future
+    public static void updateLeadOwnerToQueueAsync(List<Id> leadIds) {
+        System.debug('Updating lead owner to Call Agent Queue. Lead IDs: ' + leadIds);
+        if (callAgentQueueId == null) {
+            System.debug('Call Agent Queue ID is null. Exiting update.');
+            return;
+        }
+
+        List<Lead> leadsToUpdate = [SELECT Id, OwnerId FROM Lead WHERE Id IN :leadIds];
+        System.debug('Leads fetched for owner update: ' + leadsToUpdate);
+
+        for (Lead lead : leadsToUpdate) {
+            lead.OwnerId = callAgentQueueId;
+            System.debug('Setting OwnerId to Call Agent Queue for Lead: ' + lead.Id);
+        }
+
+        if (!leadsToUpdate.isEmpty()) {
+            try {
+                update leadsToUpdate;
+                System.debug('Successfully updated leads to Call Agent Queue: ' + leadsToUpdate);
+            } catch (Exception e) {
+                System.debug('Error updating lead Owner to Call Agent Queue: ' + e.getMessage());
+            }
+        }
+    }
+
+    // Find the next assigned lead for the current user
+    @AuraEnabled
+    public static String findNextAssignedLead(Id currentLeadId) {
+        Id userId = UserInfo.getUserId();
+        System.debug('Finding next assigned lead for user: ' + userId + ', Excluding Lead ID: ' + currentLeadId);
+
+        List<Lead> nextLeads = [
+            SELECT Id 
+            FROM Lead 
+            WHERE OwnerId = :userId 
+              AND Id != :currentLeadId
+            ORDER BY CreatedDate ASC 
+            LIMIT 1
+        ];
+
+        System.debug('Next lead found: ' + (nextLeads.isEmpty() ? 'null' : nextLeads[0].Id));
+        return nextLeads.isEmpty() ? null : nextLeads[0].Id;
     }
 }

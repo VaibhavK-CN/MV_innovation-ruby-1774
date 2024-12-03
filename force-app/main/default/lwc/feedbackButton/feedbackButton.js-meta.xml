@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" 
+                          fqn="feedbackButtons">
+    <apiVersion>57.0</apiVersion> <!-- Use your org's API version -->
+    <isExposed>true</isExposed>
+    <targets>
+        <!-- Add the supported targets where this component can be used -->
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+</LightningComponentBundle>

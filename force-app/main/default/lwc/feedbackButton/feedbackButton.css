@@ -1,0 +1,146 @@
+/* Style the feedback list container */
+.feedback-list {
+    max-height: 300px; 
+    overflow-y: auto;  
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;            
+    flex-direction: column;   
+    align-items: flex-start;  
+    gap: 10px;   
+}
+
+/* Style the individual feedback list buttons */
+.feedback-list-button {
+    font-size: 10px;    
+    padding: 6px 12px; 
+    margin: 0;       
+    cursor: pointer;   
+    background-color: #b1cefb; 
+    border: 1px solid #aac1ec;  
+    border-radius: 4px; 
+    transition: background-color 0.3s, transform 0.2s ease-in-out; 
+    width: 200px;  
+    list-style-type: none;   
+    align-items: flex-start;   
+    text-align: center; 
+}
+
+/* Style for the feedback button when selected */
+.feedback-list-button.selected {
+    background-color: #0064d2; 
+    color: white;             
+    border-color: #0064d2;    
+    transform: scale(1.05);    
+}
+
+/* Style the sub-feedback list container */
+.sub-feedback-list {
+    max-height: 300px;  
+    overflow-y: auto;   
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;          
+    flex-direction: column;    
+    align-items: flex-start;   
+    gap: 10px;   
+}
+
+/* Style the individual sub-feedback list buttons */
+.sub-feedback-list-button {
+   font-size: 10px;  
+    padding: 6px 12px; 
+    margin: 0;         
+    cursor: pointer;   
+    background-color: #b1cefb; 
+    border: 1px solid #aac1ec;  
+    border-radius: 4px; 
+    transition: background-color 0.3s, transform 0.2s ease-in-out; 
+    width: 200px; 
+    list-style-type: none;   
+    align-items: flex-start;   
+    text-align: center;
+}
+
+/* Style for sub-feedback button when selected */
+.sub-feedback-list-button.selected {
+    background-color: #0064d2; 
+    color: white;           
+    border-color: #0064d2;    
+    transform: scale(1.05);   
+}
+
+/* Style for the date-time picker popup */
+.date-time-popup {
+    width: 300px;           
+    padding: 16px;         
+    background-color: white; 
+    border-radius: 8px;     
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+/* Adjust the layout for date-time input field */
+.date-time-input {
+    width: 100%;       
+    padding: 8px 12px;     
+    border: 1px solid #c7d4ec; 
+    border-radius: 4px;     
+    font-size: 14px;      
+}
+
+/* Style the save and cancel buttons */
+.button-container {
+    margin-top: 16px;  
+}
+
+button {
+    padding: 8px 16px;        
+    font-size: 14px;          
+    border-radius: 4px;      
+    border: 1px solid #aac1ec; 
+    background-color: #0064d2; 
+    color: white;              
+    cursor: pointer;         
+    margin-right: 8px;        
+    transition: background-color 0.3s; 
+}
+
+/* Change button background on hover */
+button:hover {
+    background-color: #0056a3; 
+}
+
+/* Error and success message styles */
+.error-message {
+    color: red;       
+    font-size: 14px;         
+    margin-top: 12px;   
+}
+
+.success-message {
+    color: green;             
+    font-size: 14px;         
+    margin-top: 12px;      
+}
+
+.cancel-button {
+    padding: 6px 12px;         
+    font-size: 14px;           
+    border-radius: 2pt;        
+    cursor: pointer; 
+    margin-top: 20px;         
+    margin-right: 5px;        
+    transition: background-color 0.3s;   
+}
+
+.slds-m-top_small {
+    padding: 6px 12px;         
+    font-size: 14px;          
+    border-radius: 2px;       
+    cursor: pointer; 
+    margin-top: 20px;         
+    margin-right: 5px;        
+    transition: background-color 0.3s;
+}

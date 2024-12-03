@@ -1,0 +1,118 @@
+<template>
+    <lightning-card title="Lead Interaction Detail">
+        <div class="slds-m-around_medium">
+
+            <!-- Feedback Button -->
+            <lightning-button 
+                label="Feedback" 
+                onclick={handleShowFeedbackList}
+                variant="destructive" 
+                class="slds-m-bottom_medium">
+            </lightning-button>
+
+            <!-- Feedback List -->
+            <template if:true={isFeedbackListVisible}>
+                <div class="slds-box slds-box_xx-small slds-m-top_medium">
+                    <h3 class="slds-text-heading_medium">Feedback</h3>
+                    <ul class="feedback-list">
+                        <template for:each={feedbackList} for:item="feedback">
+                            <li key={feedback} class="slds-item">
+                                <!-- Feedback button: Ensure no invalid characters in attributes -->
+                                <button 
+                                    class="feedback-list-button" 
+                                    onclick={handleFeedbackClick}>
+                                    {feedback}
+                                </button>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </template>
+
+            <!-- Sub-feedback List -->
+            <template if:true={isSubFeedbackListVisible}>
+                <div class="slds-box slds-box_xx-small slds-m-top_medium">
+                    <h3 class="slds-text-heading_medium">Sub-feedback</h3>
+                    <ul class="sub-feedback-list">
+                        <template for:each={subFeedbackList} for:item="subFeedback">
+                            <li key={subFeedback} class="slds-item">
+                                <!-- Sub-feedback button -->
+                                <button 
+                                    class="sub-feedback-list-button" 
+                                    onclick={handleSubFeedbackClick}>
+                                    {subFeedback}
+                                </button>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </template>
+
+            <!-- Date-time Popup -->
+            <template if:true={isDateTimePopupVisible}>
+                <lightning-input
+                    type="datetime-local"
+                    label="Preferred Date and Time"
+                    value={preferredDateTime}
+                    onchange={handleDateTimeChange}>
+                </lightning-input>
+            </template>
+
+            <!-- Appointment Setter User Checkbox (Only for Appointment Setter profile) -->
+            <template if:true={isAppointmentSetterUser}>
+                <lightning-input 
+                    type="checkbox" 
+                    label="Appointment Setter User" 
+                    checked={appointmentSetterUser} 
+                    onchange={handleAppointmentSetterChange} 
+                    required>
+                </lightning-input>
+            </template>
+
+            <!-- Consultant User Checkbox (Only for Consultant Health Insurance profile) -->
+            <template if:true={isConsultantUser}>
+                <lightning-input 
+                    type="checkbox" 
+                    label="Consultant User" 
+                    checked={consultantUser} 
+                    onchange={handleConsultantUserChange} 
+                    required>
+                </lightning-input>
+            </template>
+
+            <!-- Comment Section -->
+            <lightning-textarea 
+                label="Comment" 
+                name="comment"
+                value={comment}
+                onchange={handleCommentChange}
+                class="slds-m-top_small"
+                placeholder="Enter your comment here"
+                required>
+            </lightning-textarea>
+
+            <!-- Cancel Button -->
+            <lightning-button 
+                label="Cancel" 
+                onclick={handleCancel} 
+                class="cancel-button">
+            </lightning-button>
+
+            <!-- Save Button -->
+            <lightning-button 
+                label="Save" 
+                onclick={handleSave} 
+                class="slds-m-top_small">
+            </lightning-button>
+
+            <!-- Success and Error Messages -->
+            <template if:true={successMessage}>
+                <p class="slds-text-color_success">{successMessage}</p>
+            </template>
+            <template if:true={errorMessage}>
+                <p class="slds-text-color_error">{errorMessage}</p>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>
