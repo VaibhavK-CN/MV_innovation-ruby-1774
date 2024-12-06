@@ -53,13 +53,16 @@ global with sharing class WebhookHandler {
                     String lastName = (String) formData.get('Last Name');
                     String phoneNumber = (String) formData.get('Phone Number');
                     String postcode = (String) formData.get('Postcode');
+                   String preferredTime = (String) formData.get('Preferred Contact Time 2');
+                    system.debug('preferredTime :' + preferredTime);
+                    
             
                     // Check if essential fields are present
                     if (firstName != null && email != null && lastName != null) {
                         System.debug('Webflow Form submitted by: ' + firstName + ' ' + lastName + ' with email: ' + email);
             
                         // Enqueue the WebflowLeadCreationJob to create a Lead with the fields
-                        System.enqueueJob(new WebflowLeadCreationJob(dialCode, email, firstName, lastName, phoneNumber, postcode));
+                        System.enqueueJob(new WebflowLeadCreationJob(dialCode, email, firstName, lastName, phoneNumber, postcode, preferredTime));
                     } else {
                         System.debug('Required fields are missing in the Webflow payload.');
                     }

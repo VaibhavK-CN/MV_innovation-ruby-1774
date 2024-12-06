@@ -28,7 +28,7 @@ public with sharing class LeadInteractionController {
                 subFeedbackList.add('Callback Requested - No Time Specified');
                 subFeedbackList.add('Callback Requested - Time Specified');
                 subFeedbackList.add('Not Reached');
-                subFeedbackList.add('Not Interested');
+                subFeedbackList.add('Not Interested / Wrong Timing');
                 subFeedbackList.add('Other');
             } else if (feedbackType == 'Reassign') {
                 subFeedbackList.add('Wrong Language');
@@ -37,7 +37,7 @@ public with sharing class LeadInteractionController {
                 subFeedbackList.add('Incorrect Information');
                 subFeedbackList.add('Unqualified - Undergoing Medical Treatment');
                 subFeedbackList.add('Unqualified - Multi-Year Contract');
-                subFeedbackList.add('Unqualified - No Interest');
+                subFeedbackList.add('Unqualified - No interest / Reached follow-up limit');
                 subFeedbackList.add('Other');
             } else if (feedbackType == 'Blacklist') {
                 subFeedbackList.add('Aggressive, Inappropriate Behaviour, Complaint');

@@ -5,15 +5,17 @@ public class WebflowLeadCreationJob implements Queueable {
     private String lastName;
     private String phoneNumber;
     private String postcode;
+    private String preferredTime;
 
     // Constructor to initialize the required fields
-    public WebflowLeadCreationJob(String dialCode, String email, String firstName, String lastName, String phoneNumber, String postcode) {
+    public WebflowLeadCreationJob(String dialCode, String email, String firstName, String lastName, String phoneNumber, String postcode, String preferredTime) {
         this.dialCode = dialCode;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.postcode = postcode;
+        //this.preferredTime = preferredTime;
     }
 
     // The execute method that will create the Lead
@@ -25,6 +27,7 @@ public class WebflowLeadCreationJob implements Queueable {
             Lead newLead = new Lead();
             newLead.FirstName = firstName;
             newLead.LastName = lastName;
+            
             newLead.Email = email;
             newLead.MobilePhone = dialCode + ' ' + phoneNumber; // Combine dial code and phone number
             newLead.PostalCode = postcode;
@@ -38,6 +41,9 @@ public class WebflowLeadCreationJob implements Queueable {
             insert newLead;
 
             System.debug('Lead created successfully with ID: ' + newLead.Id);
+            
+           // Lead_Interaction_Detail__c newLr = new Lead_Interaction_Detail__c();
+            
 
         } catch (Exception e) {
             System.debug('Error creating Lead: ' + e.getMessage());

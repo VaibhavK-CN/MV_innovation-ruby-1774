@@ -1,7 +1,6 @@
 import { LightningElement, track } from 'lwc';
 import getCurrentUser from '@salesforce/apex/UserStatusController.getCurrentUser';
 import updateUserStatus from '@salesforce/apex/UserStatusController.updateUserStatus';
-import assignLeadToUser from '@salesforce/apex/UserStatusController.assignLeadToUser';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class LoginLogoutComponent extends LightningElement {
@@ -47,6 +46,7 @@ export default class LoginLogoutComponent extends LightningElement {
                 if (leadUrl) {
                     // If a lead URL is returned (i.e., the user is 'Logged In'), redirect to the lead page
                     window.location.href = leadUrl;
+                    console.log('this is lead URL', leadUrl);
                 } else {
                     // Otherwise, refresh user details
                     this.fetchUserDetails();

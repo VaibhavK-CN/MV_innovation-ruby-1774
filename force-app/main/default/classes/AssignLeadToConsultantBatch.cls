@@ -164,7 +164,7 @@ global class AssignLeadToConsultantBatch implements Database.Batchable<SObject>,
         // Add batch chaining
         try {
             System.debug('Chaining the next batch job...');
-            Database.executeBatch(new AssignLeadToConsultantBatch(), 50);
+            //Database.executeBatch(new AssignLeadToConsultantBatch(), 50);
         } catch (Exception e) {
             System.debug('Error while chaining batch: ' + e.getMessage());
         }
