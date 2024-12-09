@@ -103,16 +103,34 @@ public class LeadAssignmentHelper {
     @AuraEnabled
     public static String findNextAssignedLead(Id currentLeadId) {
         Id userId = UserInfo.getUserId();
-        System.debug('Finding next assigned lead for user: ' + userId + ', Excluding Lead ID: ' + currentLeadId);
+            System.debug('Finding next assigned lead for user: ' + userId + ', Excluding Lead ID: ' + currentLeadId);
+        
+            // Directly fetch the preferred language as a String
+            String userPreferredLanguage = [
+                SELECT 	Language__c 
+                FROM User 
+                WHERE Id = :userId
+                LIMIT 1
+            ].Language__c;
+        
+            System.debug('User Preferred Language: ' + userPreferredLanguage);
+        
+            if (String.isBlank(userPreferredLanguage)) {
+                System.debug('User Preferred Language is not set. Returning null.');
+                return null;
+            }
+        
+            // Query leads where the Preferred_Language__c matches the user's language
+            List<Lead> nextLeads  = [
+                SELECT Id, Langauge_Prefered__c 
+                FROM Lead 
+                WHERE OwnerId = :callAgentQueueId
+                  AND Id != :currentLeadId
+                  AND Langauge_Prefered__c = :userPreferredLanguage
+                ORDER BY CA_Lead_Rank__c ASC  //Issue
+                LIMIT 1
+            ];
 
-        List<Lead> nextLeads = [
-            SELECT Id 
-            FROM Lead 
-            WHERE OwnerId = :callAgentQueueId 
-              AND Id != :currentLeadId
-            ORDER BY CreatedDate ASC 
-            LIMIT 1
-        ];
 
         System.debug('Next lead found: ' + (nextLeads.isEmpty() ? 'null' : nextLeads[0].Id));
         /////////////////////////////////////Assign the Next lead Owner ID to the Current User/////////
