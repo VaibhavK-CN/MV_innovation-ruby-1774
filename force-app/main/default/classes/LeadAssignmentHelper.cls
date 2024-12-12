@@ -1,7 +1,8 @@
 public class LeadAssignmentHelper {
 
-    public static Id callAgentQueueId = getQueueId('Call Agent Queue');
+    public static Id callAgentQueueId  = getQueueId('Call Agent Queue');
     public static Id consultantQueueId = getQueueId('Consultant Health Inc');
+    public static Id holdingQueueId    = getQueueId('Holding Queues');
 
     // Fetch Queue ID by name
     private static Id getQueueId(String queueName) {
@@ -13,6 +14,37 @@ public class LeadAssignmentHelper {
         } catch (Exception e) {
             System.debug('Error fetching Queue ID for ' + queueName + ': ' + e.getMessage());
             return null;
+        }
+    }
+    @future
+    public static void moveToHolding(List<Id> leadIDs){
+        System.debug('Updating lead owner to Call Agent Queue. Lead IDs: ' + leadIds);
+        if (holdingQueueId == null) {
+            System.debug('Call Agent Queue ID is null. Exiting update.');
+            return;
+        }
+
+        List<Lead> leadsToUpdate = [SELECT Id, OwnerId, Not_Intrested_Count__c, Not_Reached_Count__c FROM Lead WHERE Id IN :leadIds];
+        System.debug('Leads fetched for owner update: ' + leadsToUpdate);
+
+        for (Lead lead : leadsToUpdate) {
+                lead.OwnerId = holdingQueueId;
+				Integer count = (Integer)lead.Not_Intrested_Count__c;
+            	Integer delayDays = 7;
+            	for (Integer i = 1; i < count; i++) {
+                	delayDays *= 2;
+            	}
+            	delayDays                      = Math.min(delayDays, 1095 * 24 * 60); // max duration in minutes
+            	lead.Holding_Queue_Duration__c = String.valueOf(delayDays); 
+        }
+
+        if (!leadsToUpdate.isEmpty()) {
+            try {
+                update leadsToUpdate;
+                System.debug('Successfully updated leads to Call Agent Queue: ' + leadsToUpdate);
+            } catch (Exception e) {
+                System.debug('Error updating lead Owner to Call Agent Queue: ' + e.getMessage());
+            }
         }
     }
 

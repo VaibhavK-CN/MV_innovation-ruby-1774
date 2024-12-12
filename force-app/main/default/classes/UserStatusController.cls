@@ -66,10 +66,14 @@ private static String assignLeadToUser(Id userId) {
                             LIMIT 1];
 
         // Get the best lead in the queue
-        List<Lead> allLeads = [SELECT Id, OwnerId, Langauge_Prefered__c, Lead_Score__c 
-                         FROM Lead 
-                         WHERE OwnerId = :callAgentQueueId 
-                         ORDER BY Lead_Score__c ASC];
+        List<Lead> allLeads = [                SELECT Id, Langauge_Prefered__c,CA_Lead_Rank__c,Lead_Score__c,Not_Interested_Reached_Count__c
+                FROM Lead 
+                WHERE OwnerId = :callAgentQueueId
+        
+                
+             
+                ORDER BY CA_Lead_Rank__c,Not_Interested_Reached_Count__c,Lead_Score__c ASC  
+                ];
 
         // Filter the leads by matching the user's language preference
         List<Lead> matchingLeads = new List<Lead>();

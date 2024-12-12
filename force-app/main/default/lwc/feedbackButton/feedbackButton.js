@@ -1,6 +1,9 @@
 import { LightningElement, api, track, wire } from 'lwc';
+import { subscribe, onError, unsubscribe } from 'lightning/empApi';
+
 import createLeadInteractionDetail from '@salesforce/apex/LeadInteractionController.createLeadInteractionDetail';
-import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi'; 
+import updateTaskStatusToClosed from '@salesforce/apex/LeadInteractionController.updateTaskStatusToClosed';
+import isInteracted from '@salesforce/apex/LeadInteractionController.isInteracted';
 import findNextAssignedLead from '@salesforce/apex/LeadAssignmentHelper.findNextAssignedLead';   
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
@@ -8,13 +11,15 @@ import getFeedbackList from '@salesforce/apex/LeadInteractionController.getFeedb
 import getSubFeedbackList from '@salesforce/apex/LeadInteractionController.getSubFeedbackList';
 import getUserProfile from '@salesforce/apex/LeadInteractionController.getUserProfile';
 
+
 export default class LeadInteractionDetailsCreate extends NavigationMixin(LightningElement) {
     @api recordId;
-
+    @track showComponent = false; // Show or hide component based on task existence
+    subscription = null;
+    channelName = '/event/Task_Log__e'; // Platform Event API name
     @track isLoading = false; // Track the spinner state
     @track loadingMessage = 'Searching for a new Lead for You'; // Custom loading message
-    initialLoadDone = false; // Flag to prevent execution during initial load
-
+    initialLoadDone ; // Flag to prevent execution during initial load
     successMessage = '';
     errorMessage = '';
     comment = '';
@@ -26,6 +31,100 @@ export default class LeadInteractionDetailsCreate extends NavigationMixin(Lightn
     @track isFeedbackListVisible = false;
     @track isSubFeedbackListVisible = false;
     @track isDateTimePopupVisible = false;
+
+    constructor(){
+        super();
+        this.initialLoadDone=true;
+        console.log('constructor called');
+
+    }
+   
+    connectedCallback() {
+        console.log('connnected call back,,,,,,,,,,,,,,,,,,,,,!!!!!!');
+        if (this.initialLoadDone) {
+            this.checkIfInteracted(); // Call the method only if the flag is true
+        }
+         this.registerPlatformEventListener();
+        
+        
+    }
+    renderedCallback(){
+        if(this.initialLoadDone){
+            this.initialLoadDone = false;
+        }
+    console.log('renderedCallback')   ;
+    }
+    
+
+    disconnectedCallback() {
+        console.log('Disconnected Callback triggered');
+        this.unregisterPlatformEventListener();
+        this.showComponent = false;
+    }
+
+    // Check if there is a completed task
+    checkIfInteracted() {
+        isInteracted({ leadId: this.recordId })
+             .then(result => {
+                 this.showComponent = result;
+                 
+                 console.log('isInteracted found to be true', result);
+                  
+              })
+              .catch(error => {
+                  console.error('Error checking task interaction:', error);
+              });
+      }
+
+    // // Subscribe to the platform event
+
+    registerPlatformEventListener() {
+        console.log('Subscribing to platform event:', this.channelName);
+        subscribe(this.channelName, -1, message => {
+            console.log('Platform event received:', message);
+            
+
+            if (message?.data?.payload?.WhoID__c === this.recordId) {
+                console.log('Filtered event for recordId:', this.recordId, message.data.payload);
+                // Add your logic here
+              
+                setTimeout(() => {
+                    this.checkIfInteracted();
+                }, 2000); // 2000ms = 2 seconds
+            } else {
+                console.log('Event does not match recordId:', this.recordId);
+                setTimeout(() => {
+                    this.checkIfInteracted();
+                }, 2000); // 2000ms = 2 seconds
+            }
+        })
+        .then(response => {
+            this.subscription = response;
+            console.log('Subscribed to platform event:', response);
+        })
+        .catch(error => {
+            console.error('Error subscribing to platform event:', error);
+        });
+
+        // Handle subscription errors
+        onError(error => {
+            console.error('Platform event error:', JSON.stringify(error));
+        });
+    }
+
+    unregisterPlatformEventListener() {
+        if (this.subscription) {
+            console.log('Unsubscribing from platform event:', this.channelName);
+            unsubscribe(this.subscription, response => {
+                console.log('Unsubscribed from platform event:', response);
+                this.subscription = null;
+            }).catch(error => {
+                console.error('Error unsubscribing from platform event:', error);
+            });
+        }
+    }
+
+
 
     // Wire the feedback list from Apex
     @wire(getFeedbackList, { leadId: '$recordId' })
@@ -113,7 +212,32 @@ export default class LeadInteractionDetailsCreate extends NavigationMixin(Lightn
         this.consultantUser = event.target.checked;
     }
 
-    handleSave() {
+    /*/handleSave() {
+    if (!this.comment) {
+        this.errorMessage = 'Comment is required.';
+        this.successMessage = '';
+        return;
+    }
+
+    if (this.isDateTimePopupVisible && !this.preferredDateTime) {
+        this.errorMessage = 'Preferred Date and Time is required.';
+        this.successMessage = '';
+        return;
+    }
+
+    let preferredDateTimeValue = null;
+    if (this.preferredDateTime) {
+        const date = new Date(this.preferredDateTime);
+        if (!isNaN(date.getTime())) {
+            preferredDateTimeValue = date.toISOString();
+        } else {
+            this.errorMessage = 'Invalid date-time format.';
+            this.successMessage = '';
+            return;
+        }
+    }*/
+
+    /*handleSave() {
         if (!this.comment) {
             this.errorMessage = 'Comment is required.';
             this.successMessage = '';
@@ -136,9 +260,9 @@ export default class LeadInteractionDetailsCreate extends NavigationMixin(Lightn
                 this.successMessage = '';
                 return;
             }
-        }
+        }*/
 
-        createLeadInteractionDetail({
+        /*createLeadInteractionDetail({
             leadId: this.recordId,
             feedback: this.selectedFeedback,
             subFeedback: this.selectedSubFeedback,
@@ -158,13 +282,150 @@ export default class LeadInteractionDetailsCreate extends NavigationMixin(Lightn
                 
             });
             this.refreshLeadRecordPage();
-            this.findAndNavigateToNextLead();
+            this.findAndNavigateToNextLead();*/
+
+    /*createLeadInteractionDetail({
+        leadId: this.recordId,
+        feedback: this.selectedFeedback,
+        subFeedback: this.selectedSubFeedback,
+        comment: this.comment,
+        preferredDateTime: preferredDateTimeValue
+    })
+        .then(result => {
+            this.successMessage = `Lead Interaction Detail created with ID: ${result}`;
+            this.showToast('Success', 'Lead Interaction Detail created.', 'success');
+            this.errorMessage = '';
+
+            // Hide the component
+            this.showComponent = false;
+        })
+        .catch(error => {
+            this.errorMessage = `Error: ${error.body.message}`;
+            this.successMessage = '';
+        });
+    }*/
+
+        handleSave() {
+            // Safeguard: Check if the save process is already in progress
+            if (this.isLoading) {
+                console.warn('Save process already in progress. Aborting duplicate save attempt.');
+                return;
+            }
+            updateTaskStatusToClosed({leadId: this.recordId});
+            // Validate required fields
+            if (!this.comment) {
+                this.errorMessage = 'Comment is required.';
+                this.successMessage = '';
+                return;
+            }
+        
+            if (this.isDateTimePopupVisible && !this.preferredDateTime) {
+                this.errorMessage = 'Preferred Date and Time is required.';
+                this.successMessage = '';
+                return;
+            }
+        
+            let preferredDateTimeValue = null;
+            if (this.preferredDateTime) {
+                const date = new Date(this.preferredDateTime);
+                if (!isNaN(date.getTime())) {
+                    preferredDateTimeValue = date.toISOString();
+                    console.log('preferredDateTimeValue:', preferredDateTimeValue);
+                } else {
+                    this.errorMessage = 'Invalid date-time format.';
+                    this.successMessage = '';
+                    return;
+                }
+            }
+        
+            // Indicate that the save process has started
+            this.isLoading = true;
+        
+            createLeadInteractionDetail({
+                leadId: this.recordId,
+                feedback: this.selectedFeedback,
+                subFeedback: this.selectedSubFeedback,
+                comment: this.comment,
+                preferredDateTime: preferredDateTimeValue
+            })
+                .then((result) => {
+                    this.successMessage = `Lead Interaction Detail created with ID: ${result}`;
+                    this.showToast('Success', 'Lead Interaction Detail created.', 'success');
+                    this.errorMessage = '';
+        
+                    // Update the associated Task status to 'Closed'
+                  
+        
+                    // Hide the component
+                    this.showComponent = false;
+        
+                    // Refresh the Lead record
+                    this.refreshLeadRecordPage();
+        
+                    // Navigate to the next lead
+                    this.findAndNavigateToNextLead();
+                })
+                .catch((error) => {
+                    console.error('Error creating Lead Interaction Detail:', error);
+                    this.errorMessage = `Error: ${error.body ? error.body.message : error}`;
+                    this.successMessage = '';
+                })
+                .finally(() => {
+                    // Indicate that the save process has ended
+                    this.unregisterPlatformEventListener();
+                    this.isLoading = false;
+                });
+        }
+        
+    /*updateTaskStatusToClosed() 
+{
+    const taskId = this.getAssociatedTaskId(); // Logic to fetch the associated Task ID
+
+    if (taskId) {
+        updateTaskStatusToClosed({ taskId: taskId })
+            .then(() => {
+                console.log('Task status updated to Closed', this.taskId);
+                this.showToast('Success', 'Task status updated to Closed.', 'success');
+            })
+            .catch(error => {
+                console.error('Error updating task status:', error);
+
+                // Log detailed error for debugging
+                if (error.body) {
+                    console.error('Error body message:', error.body.message);
+                }
+
+                this.showToast('Error', 'Failed to update task status. ' + (error.body ? error.body.message : ''), 'error');
+            });
+    } else {
+        console.warn('No Task ID found to update.');
+        this.showToast('Error', 'No associated Task ID found.', 'error');
     }
+}*/
+
+    // Fetch Associated Task ID
+    /*getAssociatedTaskId() 
+    {
+        // Replace this placeholder with actual logic to fetch the Task ID
+        return 'someTaskId'; // Example placeholder ID
+    }*/
+
+    // Show Toast Message
+    showToast(title, message, variant) {
+        const evt = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant,
+        });
+        this.dispatchEvent(evt);
+    }
+
+
 
     // Refresh the record page
     refreshLeadRecordPage() {
         // console.log('Refresh Method called!');
-        getRecordNotifyChange([{ recordId: this.recordId }]);
+       // getRecordNotifyChange([{ recordId: this.recordId }]);
         this.showToast('Success', 'Lead record updated.', 'success');
     }
 
@@ -211,9 +472,6 @@ export default class LeadInteractionDetailsCreate extends NavigationMixin(Lightn
             },
         });
     }
-    
-    
-
     // Show toast messages
     showToast(title, message, variant) {
         const evt = new ShowToastEvent({
@@ -232,7 +490,7 @@ export default class LeadInteractionDetailsCreate extends NavigationMixin(Lightn
         this.isFeedbackListVisible = false;
         this.isSubFeedbackListVisible = false;
         this.isDateTimePopupVisible = false;
-        this.errorMessage = '';
+        //this.errorMessage = '';
         this.successMessage = '';
     }
 

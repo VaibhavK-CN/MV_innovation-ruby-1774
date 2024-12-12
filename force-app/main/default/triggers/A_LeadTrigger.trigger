@@ -6,11 +6,12 @@ trigger A_LeadTrigger on Lead (after insert, after update) {
     if (TriggerHelper.isTriggerAllowed()) {
         System.debug('Recursion allowed. Processing trigger logic.');
         try {
-            Boolean shouldRunBatch = false;
-            List<Id> newLeadIds = new List<Id>(); //For newly inserted lead without PF Date Time
-            List<Id> newLeadwithInteraction = new List<Id>(); //For newly inserted lead with PF Date Time
+            Boolean shouldRunBatch           = false;
+            List<Id> newLeadIds              = new List<Id>(); //For newly inserted lead without PF Date Time
+            List<Id> newLeadwithInteraction  = new List<Id>(); //For newly inserted lead with PF Date Time
             List<Id> leadsForConsultantQueue = new List<Id>(); //For Lead Updates with Appointments
-            List<Id> leadIdForQueueUpdate = new List<Id>(); //For Lead Updates without Appointments
+            List<Id> leadIdForQueueUpdate    = new List<Id>(); //For Lead Updates without Appointments
+            List<Id> leadIdForHoldingQueue   = new List<Id>(); //For Storing a holding lead ids
             
 
             if (Trigger.isAfter) {
@@ -25,7 +26,7 @@ trigger A_LeadTrigger on Lead (after insert, after update) {
                               newLeadwithInteraction.add(Lead.Id);
                         }
                         else{
-                           	 newLeadIds.add(lead.Id);
+                             newLeadIds.add(lead.Id);
                         }
                         
                     }
@@ -80,14 +81,20 @@ trigger A_LeadTrigger on Lead (after insert, after update) {
                         }
                          ///////////////////////////////////////////////////////////////////////////////////////////////////////////
                          
-					}
+                    }
                 }
 
                 if (Trigger.isUpdate && newLeadwithInteraction.isEmpty() && newLeadIds.isEmpty()) {
                     System.debug('Processing after update trigger for Lead.');
-					
+                    
                     for (Lead lead : Trigger.new) {
                         Lead oldLead = Trigger.oldMap != null ? Trigger.oldMap.get(lead.Id) : null;
+                        
+                        if(lead.Not_Intrested_Count__c != null && lead.Not_Intrested_Count__c != oldLead.Not_Intrested_Count__c){
+                            leadIdForHoldingQueue.add(lead.Id);
+                        }else if(lead.Not_Reached_Count__c == 5 && lead.Not_Reached_Count__c != oldLead.Not_Reached_Count__c){
+                            leadIdForHoldingQueue.add(lead.Id);
+                        }
 
                         // Check for Appointment Status change
                         if (oldLead != null && 
@@ -121,8 +128,7 @@ trigger A_LeadTrigger on Lead (after insert, after update) {
                         }
                     }
                     //line added by tayab
-					NotReachedLeadController.handleLeadsToHoldingQueue(Trigger.new, Trigger.oldMap);
-        			NotReachedLeadController.handleLeadsToCallAgentQueue(Trigger.new);
+                    
                     //line added by tayab
                     // Assign leads to Consultant_Health_Inc queue
                     if (!leadsForConsultantQueue.isEmpty()) {
@@ -131,7 +137,10 @@ trigger A_LeadTrigger on Lead (after insert, after update) {
                     } else if (!leadIdForQueueUpdate.isEmpty()) {
                         System.debug('Calling LeadAssignmentHelper to update Lead Owner to Call Agent Queue. Lead ID: ' + leadIdForQueueUpdate);
                         LeadAssignmentHelper.updateLeadOwnerToQueueAsync(leadIdForQueueUpdate);
-                    } else {
+                    } else if(!leadIdForHoldingQueue.isEmpty()) {
+                        System.debug('Leads will be move to Holding Queue');
+                        LeadAssignmentHelper.moveToHolding(leadIdForHoldingQueue);                        
+                    }else{
                         System.debug('No updates required for Consultant_Health_Inc Queue or Call Agent Queue.');
                     }
                 }

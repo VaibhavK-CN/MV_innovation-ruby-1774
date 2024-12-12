@@ -35,9 +35,9 @@ public with sharing class LeadInteractionController {
                 subFeedbackList.add('Other');
             } else if (feedbackType == 'Unqualified') {
                 subFeedbackList.add('Incorrect Information');
-                subFeedbackList.add('Unqualified - Undergoing Medical Treatment');
-                subFeedbackList.add('Unqualified - Multi-Year Contract');
-                subFeedbackList.add('Unqualified - No interest / Reached follow-up limit');
+                subFeedbackList.add('Undergoing Medical Treatment');
+                subFeedbackList.add('Multi-Year Contract');
+                subFeedbackList.add('No interest / Reached follow-up limit');
                 subFeedbackList.add('Other');
             } else if (feedbackType == 'Blacklist') {
                 subFeedbackList.add('Aggressive, Inappropriate Behaviour, Complaint');
@@ -75,19 +75,83 @@ public with sharing class LeadInteractionController {
 
     // Method to create a new Lead Interaction Detail record with Comment field
     @AuraEnabled
-    public static String createLeadInteractionDetail(Id leadId, DateTime preferredDateTime, String feedback, String subFeedback, String comment) {
-        try {
-            Lead_Interaction_Detail__c newRecord = new Lead_Interaction_Detail__c(
-                Lead__c = leadId, 
-                Preferred_Date_Time__c = preferredDateTime,
-                Feedback__c = feedback,
-                Sub_Feedback__c = subFeedback,
-                Comment__c = comment  // Save the comment
-            );
-            insert newRecord;
-            return newRecord.Id;
-        } catch (Exception e) {
-            throw new AuraHandledException('Error: ' + e.getMessage());
-        }
+    public static String createLeadInteractionDetail(
+    Id leadId,
+    DateTime preferredDateTime,
+    String feedback,
+    String subFeedback,
+    String comment
+    ) {
+    try {
+        // Insert the Lead Interaction Detail record
+        Lead_Interaction_Detail__c newRecord = new Lead_Interaction_Detail__c(
+            Lead__c = leadId,
+            Preferred_Date_Time__c = preferredDateTime,
+            Feedback__c = feedback,
+            Sub_Feedback__c = subFeedback,
+            Comment__c = comment // Save the comment
+        );
+        insert newRecord;
+
+
+
+        return newRecord.Id;
+    } catch (Exception e) {
+        throw new AuraHandledException('Error: ' + e.getMessage());
     }
+    }
+
+
+    @AuraEnabled
+    public static Boolean isInteracted(Id leadId) {
+        // Query to find tasks associated with the lead
+        List<Task> logs = [SELECT Id FROM Task WHERE WhoId = :leadId AND Status = 'Completed'];
+        
+        // Determine if there is interaction
+        Boolean interacted = !logs.isEmpty();
+        
+        return interacted;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Boolean shouldShowFeedbackComponent(Id leadId) {
+    try {
+        Lead lead = [SELECT Show_Feedback_Component__c FROM Lead WHERE Id = :leadId LIMIT 1];
+        return lead.Show_Feedback_Component__c;
+    } catch (Exception e) {
+        throw new AuraHandledException('Error checking feedback visibility: ' + e.getMessage());
+    }
+    }
+
+    @AuraEnabled
+    public static void updateTaskStatusToClosed(Id leadId) {  //////////////////
+        system.debug('LEAD ID: ' + leadId);
+        List<Task> tasksToUpdate = [
+                                        SELECT Id, Status
+                                        FROM Task
+                                        WHERE WhoId = :leadId AND Status = 'Completed'
+                                    ];
+
+        // Create a new list to hold tasks for update
+        List<Task> tasksForUpdate = new List<Task>();
+        system.debug('List of Query for tasks : ' + tasksForUpdate);
+
+        if (!tasksToUpdate.isEmpty()) {
+            system.debug('tasksToUpdate query is not empty');
+            for(Task oldTask : tasksToUpdate) {
+                // Create a new instance and set its Id and fields to be updated
+                Task updatedTask = new Task();
+                updatedTask.Id = oldTask.Id; // Reference the original task's Id
+                updatedTask.Status = 'Closed'; // Update the field
+                tasksForUpdate.add(updatedTask); // Add to the list
+                system.debug('task updating for closed : ' + updatedTask);
+            }
+            // Perform the update operation
+            update tasksForUpdate;
+            system.debug('Task updated successfull');
+        }
+
+            
+            }
+
 }
