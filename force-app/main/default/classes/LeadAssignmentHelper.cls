@@ -29,13 +29,18 @@ public class LeadAssignmentHelper {
 
         for (Lead lead : leadsToUpdate) {
                 lead.OwnerId = holdingQueueId;
+            	System.debug('lead.OwnerId --> '+lead.OwnerId);
 				Integer count = (Integer)lead.Not_Intrested_Count__c;
             	Integer delayDays = 7;
             	for (Integer i = 1; i < count; i++) {
                 	delayDays *= 2;
             	}
-            	delayDays                      = Math.min(delayDays, 1095 * 24 * 60); // max duration in minutes
-            	lead.Holding_Queue_Duration__c = String.valueOf(delayDays); 
+            	delayDays                           = Math.min(delayDays, 1095 * 24 * 60); // max duration in minutes
+            	lead.Holding_Queue_Duration__c      = String.valueOf(delayDays);
+            if(lead.Not_Reached_Count__c == 5){
+                lead.Holding_Queue_Assigned_Date__c = System.today();
+            }
+            	
         }
 
         if (!leadsToUpdate.isEmpty()) {

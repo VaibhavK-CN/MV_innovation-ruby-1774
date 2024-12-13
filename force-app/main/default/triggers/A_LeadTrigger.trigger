@@ -87,7 +87,7 @@ trigger A_LeadTrigger on Lead (after insert, after update) {
                 if (Trigger.isUpdate && newLeadwithInteraction.isEmpty() && newLeadIds.isEmpty()) {
                     System.debug('Processing after update trigger for Lead.');
                     
-                    for (Lead lead : Trigger.new) {
+                    for (Lead lead : Trigger.New) {
                         Lead oldLead = Trigger.oldMap != null ? Trigger.oldMap.get(lead.Id) : null;
                         
                         if(lead.Not_Intrested_Count__c != null && lead.Not_Intrested_Count__c != oldLead.Not_Intrested_Count__c){
